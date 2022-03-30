@@ -1,0 +1,15 @@
+<h3>Choose your game: </h3>
+<table>
+  <tr>
+    <td *ngFor="let product of products">
+      <button class="bigButton" [title]="product.name" (click)="share(product.price)">
+        {{ product.description }}
+      </button>
+    </td>
+    <td><input id="textField1"></td>
+    <td><textarea id="textField2" rows="5"></textarea></td>
+
+  </tr>
+</table>
+
+<br><br>
