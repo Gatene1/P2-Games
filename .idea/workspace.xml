@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="762a71ff-d528-4e56-b9f8-dc38c6d87cea" name="Changes" comment="syncing files with our first attempt" />
+    <list default="true" id="762a71ff-d528-4e56-b9f8-dc38c6d87cea" name="Changes" comment="New, correct, beginnings.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -87,7 +89,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1648666424288</updated>
-      <workItem from="1648666425498" duration="1089000" />
+      <workItem from="1648666425498" duration="3151000" />
     </task>
     <task id="LOCAL-00001" summary="refactoring to include spring backend tool">
       <created>1648666809008</created>
@@ -103,7 +105,21 @@
       <option name="project" value="LOCAL" />
       <updated>1648667518742</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="New, correct, beginnings.">
+      <created>1648668006020</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1648668006020</updated>
+    </task>
+    <task id="LOCAL-00004" summary="New, correct, beginnings.">
+      <created>1648669565611</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1648669565611</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -124,6 +140,7 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="refactoring to include spring backend tool" />
     <MESSAGE value="syncing files with our first attempt" />
-    <option name="LAST_COMMIT_MESSAGE" value="syncing files with our first attempt" />
+    <MESSAGE value="New, correct, beginnings." />
+    <option name="LAST_COMMIT_MESSAGE" value="New, correct, beginnings." />
   </component>
 </project>
