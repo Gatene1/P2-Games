@@ -461,6 +461,7 @@ function DrawAll() {
     gameThreeReset = false;
   }
 
+
   if (gameChoice == 1) {  // Pong Game
     gameOneReset = false;
     gameTwoReset = true;
@@ -481,7 +482,7 @@ function DrawAll() {
     DrawRectangle(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 'black'); // Background
     DrawRectangle(paddleX, paddleY, 100, 10, '#0080ee'); // Bottom paddle
     DrawCircle(ballX += ballSpeedX, ballY += ballSpeedY, 10, 'white'); // Ball
-    DrawRectangle(paddleX, paddleY, 100, 10, '#0080ee'); // Background
+    // DrawRectangle(paddleX, paddleY, 100, 10, '#0080ee'); // Background
 
     canvas.addEventListener('mousemove', function (evt: MouseEvent) {
       let rect = canvas.getBoundingClientRect(); // Position of mouse on page
@@ -491,25 +492,25 @@ function DrawAll() {
       paddleX = mouseX - (PADDLE_WIDTH / 2);
     });
 
-    if (ballY >= paddleY && ballX >= paddleX && ballX <= paddleX + PADDLE_WIDTH) {
+    if (ballY >= paddleY && ballX >= paddleX && ballX <= paddleX + PADDLE_WIDTH) {  // If ball hits bottom paddle, it will bounce back.
       ballSpeedY *= -1;
-    } else if (ballX <= 10 || ballX >= CANVAS_WIDTH - 10) {
+    } else if (ballX <= 10 || ballX >= CANVAS_WIDTH - 10) {  // If ball hits left or right wall, it inverses its direction (bounces off wall).
       ballSpeedX *= -1;
-    } else if (ballY <= 10) {
+    } else if (ballY <= 10) {  // If the ball hits the top wall, it inverses its direction (bounces off wall).
       ballSpeedY *= -1;
-    } else if (ballY >= CANVAS_HEIGHT - 10) {
+    } else if (ballY >= CANVAS_HEIGHT - 10) {  // If the ball hits the bottom wall behind the paddle, it calls the ballReset function and resets the ball to the middle of the board.
       ballReset();
     }
 
 
-    function ballReset() {
-      ballX = CANVAS_WIDTH / 2;
-      ballY = CANVAS_HEIGHT / 2;
+    function ballReset() {  // Simple function to reset the ball to the middle of the board.
+      ballX = CANVAS_WIDTH / 2; // Sets ball to middle of the x-axis.
+      ballY = CANVAS_HEIGHT / 2;  // Sets ball to middle of the y-axis.
     }
 
 
   } else if (gameChoice == 2) { // Megaman Game
-    DrawRectangle(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, "#9bbc0f")
+    DrawRectangle(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, "#9bbc0f");  // Background
     DrawTracks();
     stageImage = new Image();
 
