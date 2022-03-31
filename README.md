@@ -2,13 +2,19 @@
 - Our mission for this project was to take our new-found knowledge and 
   try to build our own games from scratch.
 - We used Angular as our front-end framework and Spring as our back-end framework.
-- We set out with a simple game that we called `Pong` and we built it using Typescript.
+- We set out with a simple goal of testing our skills and understanding of the 
+  frameworks we used to build this project.
+- We started with a simple game that we called `Pong` and we built it entirely using Typescript.
+- 
+
 
 - We used the following libraries:
   - [Angular](https://angular.io/)
   - [Spring](https://spring.io/)
   - [JQuery](https://jquery.com/)
-  
+  - [Postgresql](https://www.postgresql.org/)
+  - [Typescript](https://www.typescriptlang.org/)
+
 
 ## User Stories
 - User has access to 3 different games on the landing page:
@@ -17,7 +23,7 @@
   - `Minesweeper`
 
 
-- User can navigate to the game page by clicking on the buttons with desired game name.
+- User can navigate to the game page by clicking on the buttons with the desired game name.
 - This will change the contents of the canvas as well as reset the others games.
 
 
@@ -27,7 +33,8 @@
 - The game is played by using the paddle to stop the ball from reaching 
   the bottom of the screen.
 - If the ball reaches the bottom of the screen, the ball will reset to the middle of the screen
-  and continue to move about the canvas.
+  and continue to move about the canvas, while bouncing off the other bounding walls.
+
 
 
 
