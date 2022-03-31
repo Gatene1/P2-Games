@@ -3,8 +3,12 @@ import { Component, Input } from '@angular/core';
 import { Product } from '../products';
 import { products } from '../products';
 
+import { GameAddon }  from "./gameAddons";
+import { minesweeperButton } from "./gameAddons";
+
 let gameChoice = 3;
 let startOver = false;
+let clicked = false;
 
 @Component({
   selector: 'app-game-list',
@@ -15,6 +19,8 @@ let startOver = false;
 export class GameListComponent {
   @Input() product!: Product;
   products = products;
+  @Input() gameAddon!: GameAddon;
+  gameButton = minesweeperButton;
 
   share(game:number) {
     if (game == 1) {
@@ -28,5 +34,15 @@ export class GameListComponent {
       startOver = true;
     }
   }
+
+  static MinesweeperResetFalse() {
+      clicked = false;
+  }
+
+  MinesweeperReset() {
+    clicked = true;
+  }
 }
-export { gameChoice, startOver };
+
+export { gameChoice, startOver, clicked};
+

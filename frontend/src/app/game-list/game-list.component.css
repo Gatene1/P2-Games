@@ -1,3 +1,8 @@
 .leftSide { width:100% ; justify-content:left; }
+
 #textField1 { width: 200px;}
 #textField2 { width: 500px;}
+
+.resetButton {
+  enabled: true;
+}
