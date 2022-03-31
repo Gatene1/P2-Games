@@ -5,7 +5,7 @@
 - We set out with a simple goal of testing our skills and understanding of the 
   frameworks we used to build this project.
 - We started with a simple game that we called `Pong` and we built it entirely using Typescript.
-- 
+- Use `ng serve` to run the application locally on a dev server. 
 
 
 - We used the following libraries:
