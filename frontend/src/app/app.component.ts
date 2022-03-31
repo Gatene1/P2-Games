@@ -1,7 +1,19 @@
 // noinspection TypeScriptCheckImport
 
 import { Component } from '@angular/core';
-import { gameChoice, startOver} from "./game-list/game-list.component";
+import { gameChoice, startOver, clicked, GameListComponent} from "./game-list/game-list.component";
+
+import { GameAddon } from './game-list/gameAddons';
+import { minesweeperButton } from './game-list/gameAddons';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'Game Chooser';
+}
 
 let megamanIdle1 = document.getElementById('megamanIdle1');
 let megamanIdle2 = document.getElementById('megamanIdle2');
@@ -143,6 +155,13 @@ let grabTextArea = (id: 'textField2') : HTMLTextAreaElement => {
   return textField2;
 };
 
+let msResetButton = (id: 'msResetButton') : HTMLButtonElement => {
+  let msResetButton = document.getElementById(id);
+  if (!(msResetButton instanceof HTMLButtonElement))
+    throw new Error('Can\'t grab the button');
+  return msResetButton;
+};
+
 
 
 
@@ -164,11 +183,11 @@ let row3 = [0, 0, 0, 0, 0];
 let row4 = [0, 0, 0, 0, 0];
 let row5 = [0, 0, 0, 0, 0];
 
-let row1Ex = [1, 1, 1, 1, 1];
-let row2Ex = [1, 1, 1, 1, 1];
-let row3Ex = [1, 1, 1, 1, 1];
-let row4Ex = [1, 1, 1, 1, 1];
-let row5Ex = [1, 1, 1, 1, 1];
+let row1Ex = [0, 0, 0, 0, 0];
+let row2Ex = [0, 0, 0, 0, 0];
+let row3Ex = [0, 0, 0, 0, 0];
+let row4Ex = [0, 0, 0, 0, 0];
+let row5Ex = [0, 0, 0, 0, 0];
 
 function ResetMineField() {
   row1 = [0, 0, 0, 0, 0];
@@ -179,6 +198,7 @@ function ResetMineField() {
 }
 
 function ResetMineSquares() {
+  let stringConvert: string = "";
   // Draws the black and white squares of the board.
   let valueToPrint: string = '';
   for (let i = 0; i < 5; i++) {
@@ -194,21 +214,46 @@ function ResetMineSquares() {
   for (let k = 0; k < 5; k++) {
     let squareColorOdd = k % 2 == 0 ? "white" : "black";
     let squareColorEven = k % 2 == 0 ? "black" : "white";
-
-    let stringConvert = row1[k] == 10 ? "\u{1F4A3}" : row1[k].toString();
-    DrawText(stringConvert, k * 80 + 30, 40, "24px Arial", squareColorOdd);
-
-    stringConvert = row2[k] == 10 ? "\u{1F4A3}" : row2[k].toString();
-    DrawText(stringConvert, k * 80 + 30, 120, "24px Arial", squareColorEven);
-
-    stringConvert = row3[k] == 10 ? "\u{1F4A3}" : row3[k].toString();
-    DrawText(stringConvert, k * 80 + 30, 200, "24px Arial", squareColorOdd);
-
-    stringConvert = row4[k] == 10 ? "\u{1F4A3}" : row4[k].toString();
-    DrawText(stringConvert, k * 80 + 30, 280, "24px Arial", squareColorEven);
-
-    stringConvert = row5[k] == 10 ? "\u{1F4A3}" : row5[k].toString();
-    DrawText(stringConvert, k * 80 + 30, 360, "24px Arial", squareColorOdd);
+    if (row1Ex[k] == 1) {
+      if (row1[k] == 10)
+        stringConvert = "\u{1F4A3}";
+      else
+        stringConvert = row1[k].toString();
+      DrawText(stringConvert, k * 80 + 30, 40, "24px Arial", squareColorOdd);
+      textInput1.value =stringConvert + " in row1[" + k + "]";
+    }
+    if (row2Ex[k] == 1) {
+      if (row2[k] == 10)
+        stringConvert = "\u{1F4A3}";
+      else
+        stringConvert = row2[k].toString();
+      DrawText(stringConvert, k * 80 + 30, 120, "24px Arial", squareColorEven);
+      textInput1.value =stringConvert + " in row2[" + k + "]";
+    }
+    if (row3Ex[k] == 1) {
+      if (row3[k] == 10)
+        stringConvert = "\u{1F4A3}";
+      else
+        stringConvert = row3[k].toString();
+      DrawText(stringConvert, k * 80 + 30, 200, "24px Arial", squareColorOdd);
+      textInput1.value =stringConvert + " in row3[" + k + "]";
+    }
+    if (row4Ex[k] == 1) {
+      if (row4[k] == 10)
+        stringConvert = "\u{1F4A3}";
+      else
+        stringConvert = row4[k].toString();
+      DrawText(stringConvert, k * 80 + 30, 280, "24px Arial", squareColorEven);
+      textInput1.value =stringConvert + " in row4[" + k + "]";
+    }
+    if (row5Ex[k] == 1) {
+      if (row5[k] == 10)
+        stringConvert = "\u{1F4A3}";
+      else
+        stringConvert = row5[k].toString();
+      DrawText(stringConvert, k * 80 + 30, 360, "24px Arial", squareColorOdd);
+      textInput1.value =stringConvert + " in row5[" + k + "]";
+    }
   }
 
 }
@@ -220,14 +265,7 @@ function ResetMineSquares() {
 *      of Global Variables / functions
  */
 
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
-})
-export class AppComponent {
-  title = 'Game Chooser';
-}
+
 
 function UpdateVariables() {
   squareRight = squareX + SQUARE_WIDTH;
@@ -238,6 +276,7 @@ function UpdateVariables() {
 window.onload = function() {
   ctxGame1 = getCanvasRenderingContext2D(getCanvasElementById('SampleGame1'));
   textInput1 = grabTextElement('textField1');
+
   ResetGameOne();
   ResetGameTwo();
   ResetGameThree();
@@ -246,7 +285,14 @@ window.onload = function() {
 }
 
 function CallAll() {
-  textInput1.value = megamanJumpingFrameCount.toString();
+
+  let resetButtonActivate = msResetButton('msResetButton');
+
+  if (gameChoice == 3) {
+    resetButtonActivate.disabled = false;
+  } else {
+    resetButtonActivate.disabled = true;
+  }
 
   addEventListener('keypress', (event) => {
 
@@ -351,7 +397,56 @@ function DrawTracks() {
       }
     }
 }
+// GetValueOfSquare will return the value of the squareOn parameter.
+const GetValueOfSquare = (squareOnF: number): number => {
+  let rowNumber = Math.trunc(squareOnF / 5);
+  let rowPOVColumn = squareOnF % 5;
+  switch (rowNumber) {
+    case 0:
+      return row1[rowPOVColumn];
+      break;
+    case 1:
+      return row2[rowPOVColumn];
+      break;
+    case 2:
+      return row3[rowPOVColumn];
+      break;
+    case 3:
+      return row4[rowPOVColumn];
+      break;
+    case 4:
+      return row5[rowPOVColumn];
+      break;
+    default:
+      return 0;
+      break;
+  }
+}
 
+
+function SetValueOfSquare(x: number, setSquare: number) {
+  let rowNumberSV = Math.trunc(x / 5);
+  let rowPOVColumnSV = x % 5;
+  switch (rowNumberSV) {
+    case 0:
+      row1[rowPOVColumnSV] = setSquare;
+      break;
+    case 1:
+      row2[rowPOVColumnSV] = setSquare;
+      break;
+    case 2:
+      row3[rowPOVColumnSV] = setSquare;
+      break;
+    case 3:
+      row4[rowPOVColumnSV] = setSquare;
+      break;
+    case 4:
+      row5[rowPOVColumnSV] = setSquare;
+      break;
+    default:
+      break;
+  }
+}
 function DrawAll() {
   if (gameOneReset) {
     ResetGameOne();
@@ -371,24 +466,24 @@ function DrawAll() {
     gameTwoReset = true;
     gameThreeReset = true;
 
-    let canvas:HTMLCanvasElement;
-    let ctx:CanvasRenderingContext2D;
+    let canvas: HTMLCanvasElement;
+    let ctx: CanvasRenderingContext2D;
 
-    let getCanvasElementById = (id : 'SampleGame1') : HTMLCanvasElement => {
+    let getCanvasElementById = (id: 'SampleGame1'): HTMLCanvasElement => {
       let canvasGame1 = document.getElementById(id);
       if (!(canvasGame1 instanceof HTMLCanvasElement)) {
         throw new Error('Can\'t access "${id}"');
       }
       return canvasGame1;
     };
-    canvas= getCanvasElementById('SampleGame1');
+    canvas = getCanvasElementById('SampleGame1');
 
     DrawRectangle(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 'black'); // Background
     DrawRectangle(paddleX, paddleY, 100, 10, '#0080ee'); // Bottom paddle
-    DrawCircle(ballX+=ballSpeedX, ballY+=ballSpeedY, 10, 'white'); // Ball
-    DrawRectangle(paddleX,paddleY,100,10, '#0080ee'); // Background
+    DrawCircle(ballX += ballSpeedX, ballY += ballSpeedY, 10, 'white'); // Ball
+    DrawRectangle(paddleX, paddleY, 100, 10, '#0080ee'); // Background
 
-    canvas.addEventListener('mousemove', function(evt:MouseEvent) {
+    canvas.addEventListener('mousemove', function (evt: MouseEvent) {
       let rect = canvas.getBoundingClientRect(); // Position of mouse on page
       let root = document.documentElement;
 
@@ -396,7 +491,7 @@ function DrawAll() {
       paddleX = mouseX - (PADDLE_WIDTH / 2);
     });
 
-    if (ballY >= paddleY  && ballX >= paddleX && ballX <= paddleX + PADDLE_WIDTH) {
+    if (ballY >= paddleY && ballX >= paddleX && ballX <= paddleX + PADDLE_WIDTH) {
       ballSpeedY *= -1;
     } else if (ballX <= 10 || ballX >= CANVAS_WIDTH - 10) {
       ballSpeedX *= -1;
@@ -411,9 +506,6 @@ function DrawAll() {
       ballX = CANVAS_WIDTH / 2;
       ballY = CANVAS_HEIGHT / 2;
     }
-
-
-
 
 
   } else if (gameChoice == 2) { // Megaman Game
@@ -629,7 +721,61 @@ function DrawAll() {
     gameOneReset = true;
     gameTwoReset = true;
     gameThreeReset = false;
-    ResetMineField();
+
+
+
+    let canvas: HTMLCanvasElement = getCanvasElementById('SampleGame1');
+    let textInput2 = grabTextArea("textField2");
+    let mouseButton;
+    let rowClicked;
+    let colClicked;
+    let valueToAdd:number = 0;
+    canvas.addEventListener('mousedown', function (evt: MouseEvent) {
+
+        if (gameChoice == 3) {
+          let rect = canvas.getBoundingClientRect(); // Position of mouse on page
+          let root = document.documentElement;
+
+          mouseX = evt.clientX - rect.left - root.scrollLeft;
+          mouseY = evt.clientY - rect.top - root.scrollTop;
+
+          valueToAdd = 1;
+
+          rowClicked = Math.trunc(mouseY / 81);
+          colClicked = Math.trunc(mouseX / 81);
+          switch (rowClicked) {
+            case 0:
+              row1Ex[colClicked] = valueToAdd;
+              textInput2.value = row1.toString() + "\n" + row2.toString() + "\n" + row3.toString() + "\n" + row4.toString() + "\n" + row5.toString();
+
+              ResetMineSquares();
+              break;
+            case 1:
+              row2Ex[colClicked] = valueToAdd;
+              textInput2.value = row1.toString() + "\n" + row2.toString() + "\n" + row3.toString() + "\n" + row4.toString() + "\n" + row5.toString();
+              ResetMineSquares();
+              break;
+            case 2:
+              row3Ex[colClicked] = valueToAdd;
+              textInput2.value = row1.toString() + "\n" + row2.toString() + "\n" + row3.toString() + "\n" + row4.toString() + "\n" + row5.toString();
+              ResetMineSquares();
+              break;
+            case 3:
+              row4Ex[colClicked] = valueToAdd;
+              textInput2.value = row1.toString() + "\n" + row2.toString() + "\n" + row3.toString() + "\n" + row4.toString() + "\n" + row5.toString();
+              ResetMineSquares();
+              break;
+            case 4:
+              row5Ex[colClicked] = valueToAdd;
+              textInput2.value = row1.toString() + "\n" + row2.toString() + "\n" + row3.toString() + "\n" + row4.toString() + "\n" + row5.toString();
+              ResetMineSquares();
+              break;
+          }
+        }
+
+    });
+
+
 
     // if the mines haven't been placed yet, nor the number of bombs on each square, and the active game is Minesweeper.
     if (!minesSet && gameChoice == 3) {
@@ -637,7 +783,7 @@ function DrawAll() {
       let mineCount = 0;
       let x: number;
       let y: number;
-      while (mineCount < 10) {
+      while (mineCount < mines) {
         // Gets a random number between 0 and 1, multiplies by 100 to get a whole number, and truncates the decimal.
         x = Math.trunc((Math.random()) * 100);
         // Places the bombs in the arrays for the board.
@@ -675,201 +821,136 @@ function DrawAll() {
               }
               break;
           }
-
-          textInput2.value = row1.toString() + "\n" + row2.toString() + "\n" + row3.toString() + "\n" + row4.toString() + "\n" + row5.toString();
-
-          let squaresChecked = 0;
-          let squareOn = 0;
-          let bombsNearSquare = 0;
-          // This variable has a type for the function return to run.
-          let squareOnValue:number = 0;
-          // These variables hold either -1, 0, 10, or some other positive number.
-          let squareLeft = -1, squareRight = -1, squareDown = -1, squareUp = -1, squareUpLeft = -1, squareUpRight = -1, squareDownLeft = -1, squareDownRight = -1;
-
-          // GetValueOfSquare will return the value of the squareOn parameter.
-          const GetValueOfSquare = (squareOnF:number):number => {
-            let rowNumber = Math.trunc(squareOnF / 5);
-            let rowPOVColumn = squareOnF % 5;
-            switch (rowNumber) {
-              case 0:
-                return row1[rowPOVColumn];
-                break;
-              case 1:
-                return row2[rowPOVColumn];
-                break;
-              case 2:
-                return row3[rowPOVColumn];
-                break;
-              case 3:
-                return row4[rowPOVColumn];
-                break;
-              case 4:
-                return row5[rowPOVColumn];
-                break;
-              default:
-                return 0;
-                break;
-            }
-          }
-
-
-          // function SetValueOfSquare(x:number, setSquare:number) {
-          //   let rowNumberSV = Math.trunc(x / 5);
-          //   let rowPOVColumnSV = x % 5;
-          //   switch (rowNumberSV) {
-          //     case 0:
-          //       row1[rowPOVColumnSV] = setSquare;
-          //       break;
-          //     case 1:
-          //       row2[rowPOVColumnSV] = setSquare;
-          //       break;
-          //     case 2:
-          //       row3[rowPOVColumnSV] = setSquare;
-          //       break;
-          //     case 3:
-          //       row4[rowPOVColumnSV] = setSquare;
-          //       break;
-          //     case 4:
-          //       row5[rowPOVColumnSV] = setSquare;
-          //       break;
-          //     default:
-          //       break;
-          //   }
-          // }
-
-          for(let x=0; x < 25; x++) {
-            if (GetValueOfSquare(squareOn) != 10) {
-              squareLeft = x - 1 >= 0 ? GetValueOfSquare(x - 1) : -1;
-              squareRight = x + 1 <= 24 ? GetValueOfSquare(x + 1) : -1;
-              squareUp = x - 5 >=0 ? GetValueOfSquare(x - 5) : -1;
-              squareDown = x + 5 <= 24 ? GetValueOfSquare(x + 5) : -1;
-              squareUpLeft = x - 6 >= 0 ? GetValueOfSquare(x - 6) : -1;
-              squareUpRight = x - 4 >= 0 ? GetValueOfSquare(x - 4) : -1;
-              squareDownLeft = x + 6 <= 24 ? GetValueOfSquare(x + 6) : -1;
-              squareDownRight = x + 4 <= 24 ? GetValueOfSquare(x + 4) : -1;
-
-
-              bombsNearSquare = squareLeft == 10 ? bombsNearSquare + 1 : bombsNearSquare + 0;
-              bombsNearSquare = squareRight == 10 ? bombsNearSquare + 1 : bombsNearSquare + 0;
-              bombsNearSquare = squareUp == 10 ? bombsNearSquare + 1 : bombsNearSquare + 0;
-              bombsNearSquare = squareDown == 10 ? bombsNearSquare + 1 : bombsNearSquare + 0;
-              bombsNearSquare = squareUpLeft == 10 ? bombsNearSquare + 1 : bombsNearSquare + 0;
-              bombsNearSquare = squareUpRight == 10 ? bombsNearSquare + 1 : bombsNearSquare + 0;
-              bombsNearSquare = squareDownLeft == 10 ? bombsNearSquare + 1 : bombsNearSquare + 0;
-              bombsNearSquare = squareDownRight == 10 ? bombsNearSquare + 1 : bombsNearSquare + 0;
-
-              //
-              // SetValueOfSquare(x, bombsNearSquare);
-
-              squareLeft = -1;
-              squareRight = -1;
-              squareUp = -1;
-              squareDown = -1;
-              squareUpLeft = -1;
-              squareUpRight = -1;
-              squareDownLeft = -1;
-              squareDownRight = -1;
-              bombsNearSquare = 0;
-
-
-
-            }
-          }
-
-          // // making each number around the bombs say how many bombs are around it.
-          // while(squaresChecked < 25) {
-          //   // getting values for the squares surrounding the squareOn.
-          //   squareOnValue = GetValueOfSquare(squareOn);
-          //
-          //   // If not a bomb, evaluate the left box
-          //   if (squareOnValue < 10) {
-          //     if (squareOn - 1 >= 0) {
-          //       // Grab value of square to the left exists.
-          //       squareLeft = GetValueOfSquare(squareOn - 1);
-          //     } else {
-          //       // if there is no square to the left, set it to -1.
-          //       squareLeft = -1;
-          //     }
-          //     // Right
-          //     if (squareOn + 1 <= 24) {
-          //       squareRight = GetValueOfSquare(squareOn + 1);
-          //     } else {
-          //       squareRight = -1;
-          //     }
-          //     // Down
-          //     if (squareOn + 5 <= 24) {
-          //       squareDown = GetValueOfSquare(squareOn + 5);
-          //     } else {
-          //       squareDown = -1;
-          //     }
-          //     // Up
-          //     if (squareOn - 5 >= 0) {
-          //       squareUp = GetValueOfSquare(squareOn - 5);
-          //     } else {
-          //       squareUp = -1;
-          //     }
-          //     // Up Left
-          //     if (squareOn - 6 >= 0) {
-          //       squareUpLeft = GetValueOfSquare(squareOn - 6);
-          //     } else {
-          //       squareUpLeft = -1;
-          //     }
-          //     // Up Right
-          //     if (squareOn - 4 >= 0) {
-          //       squareUpRight = GetValueOfSquare(squareOn - 4);
-          //     } else {
-          //       squareUpRight = -1;
-          //     }
-          //     // Down Left
-          //     if (squareOn + 4 >= 24) {
-          //       squareDownLeft = GetValueOfSquare(squareOn + 4);
-          //     } else {
-          //       squareDownLeft = -1;
-          //     }
-          //     // Down Right
-          //     if (squareOn + 6 >= 24) {
-          //       squareDownRight = GetValueOfSquare(squareOn + 6);
-          //     } else {
-          //       squareDownRight = -1;
-          //     }
-          //
-          //     if (squareLeft == 10) bombsNearSquare++;
-          //     if (squareRight == 10) bombsNearSquare++;
-          //     if (squareDown == 10) bombsNearSquare++;
-          //     if (squareUp == 10) bombsNearSquare++;
-          //     if (squareUpLeft == 10) bombsNearSquare++;
-          //     if (squareUpRight == 10) bombsNearSquare++;
-          //     if (squareDownLeft == 10) bombsNearSquare++;
-          //     if (squareDownRight == 10) bombsNearSquare++;
-          //
-          //
-          //     SetValueOfSquare(bombsNearSquare);
-          //     // textInput2.value = textInput2.value + "squareOn: " + squareOn + ", bombsNearSquare: " + bombsNearSquare + "\n";
-          //
-          //     squareLeft = 0;
-          //     squareRight = 0;
-          //     squareDown = 0;
-          //     squareUp = 0;
-          //     squareUpLeft = 0;
-          //     squareUpRight = 0;
-          //     squareDownLeft = 0;
-          //     squareDownRight = 0;
-          //     bombsNearSquare = 0;
-          //
-          //   }
-          //   // End of While loop increments.
-          //   squareOn++;
-          //   squaresChecked++;
-          // }
-
-          // textInput2.value = row1.toString() + "\n" + row2.toString() + "\n" + row3.toString() + "\n" + row4.toString() + "\n" + row5.toString();
-          ResetMineSquares();
-          minesSet = true;
         }
+
+
       }
+      let squaresChecked = 0;
+      let squareOn = 0;
+      let bombsNearSquare = 0;
+      // This variable has a type for the function return to run.
+      let squareOnValue: number = 0;
+      // These variables hold either -1, 0, 10, or some other positive number.
+      let squareLeft = -1, squareRight = -1, squareDown = -1, squareUp = -1, squareUpLeft = -1, squareUpRight = -1,
+        squareDownLeft = -1, squareDownRight = -1;
+
+
+
+      for (let checkSquare = 0; checkSquare < 25; checkSquare++) {
+        // if the value of the current square is not 10 (a bomb).
+        if (GetValueOfSquare(checkSquare) < 10) {
+
+          // Checking for squares on the left end. If not, get the values like normal.
+          if (checkSquare % 5 == 0 ) {
+            squareLeft = -1;
+            squareUpLeft = -1;
+            squareDownLeft = -1;
+            squareRight = checkSquare + 1;
+            squareUpRight = checkSquare - 4;
+            squareDownRight = checkSquare + 6;
+          } else if (checkSquare % 5 == 4) {
+            squareRight = 25;
+            squareUpRight = 25;
+            squareDownRight = 25;
+            squareLeft = checkSquare - 1;
+            squareUpLeft = checkSquare - 6;
+            squareDownLeft = checkSquare + 4;
+          } else {
+            squareLeft = checkSquare - 1;
+            squareUpLeft = checkSquare - 6;
+            squareDownLeft = checkSquare + 4;
+            squareRight = checkSquare + 1;
+            squareUpRight = checkSquare - 4;
+            squareDownRight = checkSquare + 6;
+          }
+
+          // These are going to be normal values
+          squareDown = checkSquare + 5;
+          squareUp = checkSquare - 5;
+
+          // Increments the bomb counter if the value of the square of the above is a bomb.
+          if (squareLeft >= 0) {
+            if (GetValueOfSquare(squareLeft) == 10) {
+              bombsNearSquare++;
+            }
+          }
+          if (squareRight <= 24) {
+            if (GetValueOfSquare(squareRight) == 10) {
+              bombsNearSquare++;
+            }
+          }
+          if (squareDown <= 24) {
+            if (GetValueOfSquare(squareDown) == 10) {
+              bombsNearSquare++;
+            }
+          }
+          if (squareUp >= 0) {
+            if (GetValueOfSquare(squareUp) == 10) {
+              bombsNearSquare++;
+            }
+          }
+          if (squareUpLeft >= 0) {
+            if (GetValueOfSquare(squareUpLeft) == 10) {
+              bombsNearSquare++;
+            }
+          }
+          if (squareUpRight <= 24) {
+            if (GetValueOfSquare(squareUpRight) == 10) {
+              bombsNearSquare++;
+            }
+          }
+          if (squareDownLeft >= 0) {
+            if (GetValueOfSquare(squareDownLeft) == 10) {
+              bombsNearSquare++;
+            }
+          }
+          if (squareDownRight <= 24) {
+            if (GetValueOfSquare(squareDownRight) == 10) {
+              bombsNearSquare++;
+            }
+          }
+          SetValueOfSquare(checkSquare, bombsNearSquare);
+          bombsNearSquare = 0;
+        } // if
+      }  // for
+
+
+     textInput2.value = row1.toString() + "\n" + row2.toString() + "\n" + row3.toString() + "\n" + row4.toString() + "\n" + row5.toString();
+     // textInput2.value = row1Ex.toString() + "\n" + row2Ex.toString() + "\n" + row3Ex.toString() + "\n" + row4Ex.toString() + "\n" + row5Ex.toString();
+
+      ResetMineSquares();
+      minesSet = true;
+
+
     }
   }
+  // The imported variable from game-list.ts tells if the user clicked the button "Reset Minesweeper Board".
+  if (clicked == true) {
+    minesSet = false;
+
+    squareColor = '#00ff00';
+    row1 = [0, 0, 0, 0, 0];
+    row2 = [0, 0, 0, 0, 0];
+    row3 = [0, 0, 0, 0, 0];
+    row4 = [0, 0, 0, 0, 0];
+    row5 = [0, 0, 0, 0, 0];
+
+    row1Ex = [0, 0, 0, 0, 0];
+    row2Ex = [0, 0, 0, 0, 0];
+    row3Ex = [0, 0, 0, 0, 0];
+    row4Ex = [0, 0, 0, 0, 0];
+    row5Ex = [0, 0, 0, 0, 0];
+
+    ResetMineSquares();
+
+    // This is the static method in the game-list.ts.
+    GameListComponent.MinesweeperResetFalse();
+
+  }
 }
+
+
+
 
 
 function DrawRectangle(x:number, y:number, width:number, height:number, color:string) {
@@ -894,3 +975,4 @@ function DrawText(message:string, x:number, y:number, font:string, color:string)
   ctxGame1.fillStyle = color;
   ctxGame1.fillText(message, x, y);
 }
+
