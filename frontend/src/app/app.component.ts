@@ -949,11 +949,7 @@ function DrawAll() {
   }
 }
 
-
-
-
-
-function DrawRectangle(x:number, y:number, width:number, height:number, color:string) {
+function DrawRectangle(x: number, y: number, width: number, height: number, color: string) {
 
   if (color == "Clear")
     ctxGame1.clearRect(x, y, width, height);
@@ -966,13 +962,18 @@ function DrawRectangle(x:number, y:number, width:number, height:number, color:st
 function DrawCircle(centerX: number, centerY: number, radius: number, fillColor: string | CanvasGradient | CanvasPattern) {
   ctxGame1.fillStyle = fillColor;
   ctxGame1.beginPath();
-  ctxGame1.arc(centerX, centerY, radius, 0, Math.PI*2, true);
+  ctxGame1.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
   ctxGame1.fill();
 }
 
-function DrawText(message:string, x:number, y:number, font:string, color:string) {
+function DrawText(message: string, x: number, y: number, font: string, color: string) {
   ctxGame1.font = font;
   ctxGame1.fillStyle = color;
   ctxGame1.fillText(message, x, y);
 }
+
+
+
+
+
 
