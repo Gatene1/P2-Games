@@ -38,11 +38,7 @@ let squareBottom = squareY + SQUARE_HEIGHT;
 let gameOneReset = false;
 let gameTwoReset = false;
 let gameThreeReset = false;
-
-let squareDancePhase1 = true;
-let squareDancePhase2 = false;
-let squareDancePhase3 = false;
-let squareDancePhase4 = false;
+let gameFourReset = false;
 
 
 /**
@@ -258,6 +254,44 @@ function ResetMineSquares() {
 
 }
 
+
+
+
+class snake {
+  private y:number;
+  private x:number;
+
+  public constructor(x:number,y:number) {
+    this.y = y;
+    this.x = x;
+  }
+}
+
+// Game 4 variables
+let speed = 7;
+let tileCount = 20;
+let tileSize = CANVAS_WIDTH / tileCount - 2;
+let headX = 10;
+let headY = 10;
+let speedX = 0;
+let speedY = 0;
+
+let appleX = 5;
+let appleY = 5;
+let snakeParts: any[];
+let length = 1;
+let score = 0;
+
+
+
+
+
+
+
+
+
+
+
 /*
 *   E
 *    n
@@ -351,6 +385,7 @@ function ResetGameThree() {
   ResetMineField();
   ResetMineSquares();
 }
+
 
 function rowColToArrayIndex(col:number, row:number) {
   return col + STAGE_COLS * row;
@@ -461,10 +496,12 @@ function DrawAll() {
     gameThreeReset = false;
   }
 
+
   if (gameChoice == 1) {  // Pong Game
     gameOneReset = false;
     gameTwoReset = true;
     gameThreeReset = true;
+    gameFourReset = true;
 
     let canvas: HTMLCanvasElement;
     let ctx: CanvasRenderingContext2D;
@@ -481,7 +518,7 @@ function DrawAll() {
     DrawRectangle(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 'black'); // Background
     DrawRectangle(paddleX, paddleY, 100, 10, '#0080ee'); // Bottom paddle
     DrawCircle(ballX += ballSpeedX, ballY += ballSpeedY, 10, 'white'); // Ball
-    DrawRectangle(paddleX, paddleY, 100, 10, '#0080ee'); // Background
+    // DrawRectangle(paddleX, paddleY, 100, 10, '#0080ee'); // Background
 
     canvas.addEventListener('mousemove', function (evt: MouseEvent) {
       let rect = canvas.getBoundingClientRect(); // Position of mouse on page
@@ -491,25 +528,25 @@ function DrawAll() {
       paddleX = mouseX - (PADDLE_WIDTH / 2);
     });
 
-    if (ballY >= paddleY && ballX >= paddleX && ballX <= paddleX + PADDLE_WIDTH) {
+    if (ballY >= paddleY && ballX >= paddleX && ballX <= paddleX + PADDLE_WIDTH) {  // If ball hits bottom paddle, it will bounce back.
       ballSpeedY *= -1;
-    } else if (ballX <= 10 || ballX >= CANVAS_WIDTH - 10) {
+    } else if (ballX <= 10 || ballX >= CANVAS_WIDTH - 10) {  // If ball hits left or right wall, it inverses its direction (bounces off wall).
       ballSpeedX *= -1;
-    } else if (ballY <= 10) {
+    } else if (ballY <= 10) {  // If the ball hits the top wall, it inverses its direction (bounces off wall).
       ballSpeedY *= -1;
-    } else if (ballY >= CANVAS_HEIGHT - 10) {
+    } else if (ballY >= CANVAS_HEIGHT - 10) {  // If the ball hits the bottom wall behind the paddle, it calls the ballReset function and resets the ball to the middle of the board.
       ballReset();
     }
 
 
-    function ballReset() {
-      ballX = CANVAS_WIDTH / 2;
-      ballY = CANVAS_HEIGHT / 2;
+    function ballReset() {  // Simple function to reset the ball to the middle of the board.
+      ballX = CANVAS_WIDTH / 2; // Sets ball to middle of the x-axis.
+      ballY = CANVAS_HEIGHT / 2;  // Sets ball to middle of the y-axis.
     }
 
 
   } else if (gameChoice == 2) { // Megaman Game
-    DrawRectangle(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, "#9bbc0f")
+    DrawRectangle(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, "#9bbc0f");  // Background
     DrawTracks();
     stageImage = new Image();
 
@@ -715,12 +752,14 @@ function DrawAll() {
     gameOneReset = true;
     gameTwoReset = false;
     gameThreeReset = true;
+    gameFourReset = true;
 
 
   } else if (gameChoice == 3) { // Minesweeper
     gameOneReset = true;
     gameTwoReset = true;
     gameThreeReset = false;
+    gameFourReset = true;
 
 
 
@@ -945,6 +984,186 @@ function DrawAll() {
 
     // This is the static method in the game-list.ts.
     GameListComponent.MinesweeperResetFalse();
+
+  }
+  else if (gameChoice == 4) {
+    // let canvas:HTMLCanvasElement;
+    let ctx:CanvasRenderingContext2D;
+
+    gameOneReset = true;
+    gameTwoReset = true;
+    gameThreeReset = true;
+    gameFourReset = false;
+
+    if (gameFourReset) {
+      ResetGameFour();
+      gameFourReset = false;
+    }
+    function ResetGameFour() {
+      speed = 7;
+      tileCount = 20;
+      tileSize = CANVAS_WIDTH / tileCount - 2;
+      headX = 10;
+      headY = 10;
+      speedX = 0;
+      speedY = 0;
+
+      appleX = 5;
+      appleY = 5;
+      length = 1;
+      score = 0;
+
+      draw();
+    }
+
+
+
+
+
+
+
+    function draw() { // Gameplay loop.
+      changePos();
+
+      let result = isGameOver();
+      if (result) return;
+      clearScreen();
+      checkCollision();
+      drawApple();
+      drawSnake();
+      drawScore();
+      if (score > 3) speed = 10;
+      if (score > 5) speed = 13;
+      if (score > 7) speed = 16;
+      if (score > 9) speed = 19;
+      if (score > 12) speed = 22;
+      setTimeout(draw, 1000/speed);
+    }
+
+    function drawScore() {
+      ctx.fillStyle = 'white';
+      ctx.font = '10px Verdana';
+      ctx.fillText("Score " + score, CANVAS_WIDTH - 50, 10);
+    }
+
+    function isGameOver() {
+      // check if snake touches bounding walls
+      let gameOver = false;
+
+      // Base case for if game hasn't started.
+      if (speedY === 0 && speedX === 0) {
+        return false;
+      }
+
+      if (headX < 0) {  // left wall
+        gameOver = true;
+      } else if (headX > tileCount - 1) { // right wall
+        gameOver = true;
+      } else if (headY < 0) {  // top wall
+        gameOver = true;
+      } else if (headY > tileCount - 1) { // bottom wall
+        gameOver = true;
+      }
+
+      // Check if snake hits itself. If so, gameOver becomes true and triggers game over text.
+      for (let i = 0; i < snakeParts.length; i++) {
+        let part = snakeParts[i];
+        if (part.x == headX && part.y == headY) {
+          gameOver = true;
+          break;
+        }
+      }
+
+
+      // If gameOver is true, it prints gradient colored text and stops the game.
+      if (gameOver) {
+        ctx.fillStyle = 'white';
+        ctx.font = '50px Verdana';
+        let gradient = ctx.createLinearGradient(0, 0, CANVAS_WIDTH, 0);
+        gradient.addColorStop(Number("0"), "magenta");
+        gradient.addColorStop(Number("0.5"), "blue");
+        gradient.addColorStop(Number("1.0"), "red");
+        ctx.fillStyle = gradient;
+        ctx.fillText("Game Over", CANVAS_WIDTH / 6.5, CANVAS_HEIGHT / 2);
+      }
+      return gameOver;
+    }
+
+
+    function clearScreen() {
+      // Creates the black background
+      ctx.fillStyle = 'black';
+      ctx.fillRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
+    }
+
+    function changePos() {
+      // Changes the direction of the snake when event happens.
+      headX += speedX;
+      headY += speedY;
+    }
+
+    function drawApple() {
+      // Draws apple and makes it red.
+      ctx.fillStyle = 'red';
+      ctx.fillRect(appleX * tileCount, appleY * tileCount, tileSize, tileSize);
+    }
+
+    function checkCollision() {
+      // Checks if snake hits apple. If so, it increments the length and score by one, then generates a new apple in a random position.
+      if (appleX === headX && appleY === headY) {
+        appleX = Math.floor(Math.random() * tileCount);
+        appleY = Math.floor(Math.random() * tileCount);
+        length++;
+        score++;
+
+      }
+    }
+
+    function drawSnake() {
+      // Body of the snake. Adds a new part to the snake every time an apple is eaten.
+      ctx.fillStyle = 'green';
+      for (let i = 0; i < snakeParts.length; i++) {
+        let part = snakeParts[i];
+        ctx.fillRect(part.x * tileCount, part.y * tileCount, tileSize, tileSize);
+      }
+
+      // Puts an item at the end of the snakeParts array
+      snakeParts.push(new snake(headX, headY));
+      if (snakeParts.length > length) {
+        snakeParts.shift();
+      }
+
+      // Head of the snake
+      ctx.fillStyle = 'orange';
+      ctx.fillRect(headX * tileCount, headY * tileCount, tileSize, tileSize);
+    }
+
+    document.body.addEventListener('keydown', keyDown);
+// Checks if the user has pressed a direction key. If so, it changes the direction of the snake to that direction.
+    function keyDown(evt: { keyCode: number; }) {
+      if(evt.keyCode === 38){  // up
+        if (speedY === 1) { return }
+        speedY = -1;
+        speedX = 0;
+      }
+      if(evt.keyCode === 40){  // down
+        if (speedY === -1) { return }
+        speedY = 1;
+        speedX = 0;
+      }
+      if(evt.keyCode === 37){  // left
+        if (speedX === 1) { return }
+        speedX = -1;
+        speedY = 0;
+      }
+      if(evt.keyCode === 39){  // right
+        if (speedX === -1) { return }
+        speedX = 1;
+        speedY = 0;
+      }
+    }
+
+    draw();
 
   }
 }
