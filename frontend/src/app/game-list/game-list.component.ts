@@ -33,6 +33,10 @@ export class GameListComponent {
       gameChoice = 3;
       startOver = true;
     }
+    else if (game == 4) {
+      gameChoice = 4;
+      startOver = true;
+    }
   }
 
   static MinesweeperResetFalse() {

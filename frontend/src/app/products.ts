@@ -25,5 +25,12 @@ export const products = [
     name: 'Simple. Click a tile, not a mine.',
     price: 3,
     description: 'Minesweeper'
+  },
+
+  {
+    id: 4,
+    name: 'A sample stage without collisions',
+    price: 4,
+    description: 'Snake'
   }
 ];
