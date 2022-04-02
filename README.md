@@ -21,13 +21,14 @@
   - `Pong`
   - `Mega-man prototype`
   - `Minesweeper`
+  - `Snake`
 
 
 - User can navigate to the game page by clicking on the buttons with the desired game name.
 - This will change the contents of the canvas as well as reset the others games.
 
 
-## Pong Info:
+## Pong:
 - The game is a single player game where the user can move the paddle left
   and right using the mouse while hovering over the canvas.
 - The game is played by using the paddle to stop the ball from reaching 
@@ -38,11 +39,27 @@
 
 
 
-## Mega-man Prototype Info:
+## Mega-man Prototype:
 - User can move the character left and right using the `A` and `D` keys.
 - If the character doesn't move, it will trigger an idle animation where he blinks every few seconds.
 - User can jump by pressing the `Spacebar` and the character will jump higher the longer it is pressed.
 
 
-## Minesweeper Info:
+## Minesweeper:
+- The object of this game is to reveal all the tiles that don't contain a bomb.
+- Upon navigating to the Minesweeper tab, the user is presented with an empty grid with bombs
+  hidden randomly under tiles.
+- Each tile contains a number or a bomb, click the tile to reveal in contents.
+- When a number is revealed, the number equals the amount of bombs that are adjacent to that tile.
+- When a bomb is revealed, game is lost and the player can click the `Reset` button above the 
+  playing field.
+- Game is won if all non-bomb tiles are discovered.
 
+## Snake
+- This game will remain paused until the snake is moved. 
+- Control the snake using the `Arrow` keys.
+- The object of the game is to move the snake about the board collecting apples.
+- Each apple eaten increases the snake's length by one segment and increases your score by one.
+- Snake gradually gets faster as its length increases.
+- Game is lost if the user runs into a bounding wall or if it runs into its own body.
+- 
