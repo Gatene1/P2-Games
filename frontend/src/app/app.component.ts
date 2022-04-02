@@ -49,6 +49,8 @@ const PADDLE_HEIGHT:number = 10;
 let distance:number = 60;
 let paddleX:number = 220;
 let paddleY:number = 380;
+let paddle2Y:number = 10
+let paddle2X:number =  170
 let ballX: number = 75;
 let ballY: number = 75;
 let ballSpeedX: number = 5;
@@ -503,8 +505,14 @@ function DrawAll() {
     gameThreeReset = true;
     gameFourReset = true;
 
+    // let paddle2Y:number = 10;
+    // let paddle2X:number = 100;
+
     let canvas: HTMLCanvasElement;
     let ctx: CanvasRenderingContext2D;
+    let ballSpeed:number;
+
+
 
     let getCanvasElementById = (id: 'SampleGame1'): HTMLCanvasElement => {
       let canvasGame1 = document.getElementById(id);
@@ -517,27 +525,55 @@ function DrawAll() {
 
     DrawRectangle(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 'black'); // Background
     DrawRectangle(paddleX, paddleY, 100, 10, '#0080ee'); // Bottom paddle
+    DrawRectangle(paddle2X,paddle2Y,PADDLE_WIDTH,PADDLE_HEIGHT, '#0080ee'); // Top/AI paddle
     DrawCircle(ballX += ballSpeedX, ballY += ballSpeedY, 10, 'white'); // Ball
     // DrawRectangle(paddleX, paddleY, 100, 10, '#0080ee'); // Background
 
     canvas.addEventListener('mousemove', function (evt: MouseEvent) {
       let rect = canvas.getBoundingClientRect(); // Position of mouse on page
       let root = document.documentElement;
+      DrawNet();
 
       mouseX = evt.clientX - rect.left - root.scrollLeft;
       paddleX = mouseX - (PADDLE_WIDTH / 2);
     });
 
-    if (ballY >= paddleY && ballX >= paddleX && ballX <= paddleX + PADDLE_WIDTH) {  // If ball hits bottom paddle, it will bounce back.
+    if (ballY >= paddleY -15 && ballX >= paddleX && ballX <= paddleX + PADDLE_WIDTH) {  // If ball hits bottom paddle, it will bounce back.
       ballSpeedY *= -1;
-    } else if (ballX <= 10 || ballX >= CANVAS_WIDTH - 10) {  // If ball hits left or right wall, it inverses its direction (bounces off wall).
+    } else if (ballX <= 10 || ballX >= CANVAS_WIDTH - 30) {  // If ball hits left or right wall, it inverses its direction (bounces off wall).
       ballSpeedX *= -1;
-    } else if (ballY <= 10) {  // If the ball hits the top wall, it inverses its direction (bounces off wall).
+    } else if (ballY <= 15) {  // If the ball hits the top wall, it inverses its direction (bounces off wall).
       ballSpeedY *= -1;
+      // ballReset();
     } else if (ballY >= CANVAS_HEIGHT - 10) {  // If the ball hits the bottom wall behind the paddle, it calls the ballReset function and resets the ball to the middle of the board.
       ballReset();
     }
 
+
+    function DrawNet() {
+      for (let i=0; i < CANVAS_HEIGHT; i+=35) {
+        DrawRectangle(CANVAS_WIDTH / 2, i, 25, 5, '#c7c7c7');
+      }
+    }
+
+    function AIPaddle() {
+      // Have the paddle2 chase after the ball.
+      // Have center of paddle2 follow ballY.
+
+      // Grab difference of ballY and paddle2Y.
+      // Paddle2Y follows ballY, and stop if the center is parallel to ballY.
+
+      getRandomSpeed();
+      if (paddle2Y /2 > ballY)
+        paddle2Y -= Math.abs(ballSpeedY) - ballSpeed;
+      else if (paddle2Y/2 < ballY)
+        paddle2Y += Math.abs(ballSpeedY) - ballSpeed;
+
+    }
+
+    function getRandomSpeed() {
+      ballSpeed = Math.random() * 3;
+    }
 
     function ballReset() {  // Simple function to reset the ball to the middle of the board.
       ballX = CANVAS_WIDTH / 2; // Sets ball to middle of the x-axis.
