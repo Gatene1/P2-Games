@@ -4,6 +4,6 @@ export interface GameAddon {
 }
 
 export const minesweeperButton = {
-  value: 'Reset Minesweeper Board',
+  value: 'Reset Minesweeper board.',
   title: 'Reset the board to its original state'
 }

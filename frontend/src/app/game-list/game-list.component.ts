@@ -22,6 +22,8 @@ export class GameListComponent {
   @Input() gameAddon!: GameAddon;
   gameButton = minesweeperButton;
 
+
+
   share(game:number) {
     if (game == 1) {
       gameChoice = 1;
@@ -47,6 +49,7 @@ export class GameListComponent {
     clicked = true;
   }
 }
+
 
 export { gameChoice, startOver, clicked};
 

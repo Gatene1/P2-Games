@@ -3,8 +3,12 @@
 import { Component } from '@angular/core';
 import { gameChoice, startOver, clicked, GameListComponent} from "./game-list/game-list.component";
 
+import { Snake } from './Snake';
+import { snake } from './Snake';
+
 import { GameAddon } from './game-list/gameAddons';
 import { minesweeperButton } from './game-list/gameAddons';
+import {TimeInterval} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -15,25 +19,75 @@ export class AppComponent {
   title = 'Game Chooser';
 }
 
-let megamanIdle1 = document.getElementById('megamanIdle1');
-let megamanIdle2 = document.getElementById('megamanIdle2');
-let elecManInsideFloor1 = document.getElementById('elecManInsideFloor1');
+let buttons = document.getElementById('msResetButton');
 
 
+
+
+
+
+/******
+ *****
+ ****
+ ***
+ **Global Variables / functions
+ ***
+ ****
+ *****
+ ******/
+
+let canvas: HTMLCanvasElement;
 let ctxGame1 : CanvasRenderingContext2D;
 let textInput1 : HTMLInputElement;
 
-const CANVAS_WIDTH = 416;
-const CANVAS_HEIGHT = 416;
-const SQUARE_WIDTH = 100;
-const SQUARE_HEIGHT = 100;
-const FRAMES_PER_SECOND = 30;
+const CANVAS_WIDTH = 400;
+const CANVAS_HEIGHT = 400;
 
-let squareSpeed = 5;
-let squareX = 0;
-let squareY = 0;
-let squareRight = squareX + SQUARE_WIDTH;
-let squareBottom = squareY + SQUARE_HEIGHT;
+let framesPerSecond: number = 30;
+
+
+
+let getCanvasElementById = (id : 'SampleGame1') : HTMLCanvasElement => {
+  let canvasGame1 = document.getElementById(id);
+  if (!(canvasGame1 instanceof HTMLCanvasElement)) {
+    throw new Error('Can\'t access "${id}"');
+  }
+  return canvasGame1;
+};
+
+//canvas = getCanvasElementById('SampleGame1');
+
+let getCanvasRenderingContext2D = (canvasGame1 : HTMLCanvasElement) : CanvasRenderingContext2D => {
+  let context1 = canvasGame1.getContext('2d');
+
+  if (context1 === null) {
+    throw new Error("Browser doesn't support Canvas Context Drawing");
+  }
+  return context1;
+};
+
+//ctxGame1 = getCanvasRenderingContext2D(canvas);
+
+let grabTextElement = (id: 'textField1') : HTMLInputElement => {
+  let textField1 = document.getElementById(id);
+  if (!(textField1 instanceof HTMLInputElement))
+    throw new Error('Can\'t grab the text box');
+  return textField1;
+};
+
+let grabTextArea = (id: 'textField2') : HTMLTextAreaElement => {
+  let textField2 = document.getElementById(id);
+  if (!(textField2 instanceof HTMLTextAreaElement))
+    throw new Error('Can\'t grab the text area');
+  return textField2;
+};
+
+let msResetButton = (id: 'msResetButton') : HTMLButtonElement => {
+  let msResetButton = document.getElementById(id);
+  if (!(msResetButton instanceof HTMLButtonElement))
+    throw new Error('Can\'t grab the button');
+  return msResetButton;
+};
 
 let gameOneReset = false;
 let gameTwoReset = false;
@@ -41,31 +95,57 @@ let gameThreeReset = false;
 let gameFourReset = false;
 
 
-/**
- * Game 1: Pong game variables
- */
+
+
+
+
+
+
+
+
+
+
+/******
+ *****
+ ****
+ ***
+ **Game 1: Pong game variables
+ ***
+ ****
+ *****
+ ******/
 const PADDLE_WIDTH:number = 100;
 const PADDLE_HEIGHT:number = 10;
 let distance:number = 60;
 let paddleX:number = 220;
 let paddleY:number = 380;
-let paddle2Y:number = 10
-let paddle2X:number =  170
 let ballX: number = 75;
 let ballY: number = 75;
 let ballSpeedX: number = 5;
 let ballSpeedY: number = 7;
 let mouseX:number, mouseY:number;
 
+function ResetGameOne() {
+  let ballX: number = 75;
+  let ballY: number = 75;
+  let ballSpeedX: number = 5;
+  let ballSpeedY: number = 7;
+  let mouseX:number, mouseY:number;
+}
 
-/*
-*   G
-*    a
-*     m
-*      e
-*       2 Global Variables / functions
-*
- */
+
+
+
+/******
+ *****
+ ****
+ ***
+ **Game 2: Megaman game variables
+ ***
+ ****
+ *****
+ ******/
+
 
 let keys = {
   left: false,
@@ -102,6 +182,8 @@ let friction = 0.7;
 let megamanIdlingFrameCount = 0;
 let megamanMovingFrameCount = 0;
 let megamanJumpingFrameCount = 0;
+let megamanIdlingFrameMax = 120;
+let blinkCountThreshold = 126;
 
 const STAGE_COLS = 13;
 const STAGE_ROWS = 13;
@@ -120,274 +202,14 @@ let elecmanStageRoom1 =  [2, 6, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2,
   2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 2,
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1];
 
-let getCanvasElementById = (id : 'SampleGame1') : HTMLCanvasElement => {
-  let canvasGame1 = document.getElementById(id);
-  if (!(canvasGame1 instanceof HTMLCanvasElement)) {
-    throw new Error('Can\'t access "${id}"');
-  }
-  return canvasGame1;
-};
-
-// let canvas = getCanvasElementById('SampleGame1');
-
-let getCanvasRenderingContext2D = (canvasGame1 : HTMLCanvasElement) : CanvasRenderingContext2D => {
-  let context1 = canvasGame1.getContext('2d');
-
-  if (context1 === null) {
-    throw new Error("Browser doesn't support Canvas Context Drawing");
-  }
-  return context1;
-};
-
-let grabTextElement = (id: 'textField1') : HTMLInputElement => {
-  let textField1 = document.getElementById(id);
-  if (!(textField1 instanceof HTMLInputElement))
-    throw new Error('Can\'t grab the text box');
-  return textField1;
-};
-
-let grabTextArea = (id: 'textField2') : HTMLTextAreaElement => {
-  let textField2 = document.getElementById(id);
-  if (!(textField2 instanceof HTMLTextAreaElement))
-    throw new Error('Can\'t grab the text area');
-  return textField2;
-};
-
-let msResetButton = (id: 'msResetButton') : HTMLButtonElement => {
-  let msResetButton = document.getElementById(id);
-  if (!(msResetButton instanceof HTMLButtonElement))
-    throw new Error('Can\'t grab the button');
-  return msResetButton;
-};
-
-
-
-
-/*
-*   G
-*    a
-*     m
-*      e
-*       3 Global Variables / functions
-*
- */
-let mines = 5;
-let minesSet = false;
-
-let squareColor = '#00ff00';
-let row1 = [0, 0, 0, 0, 0];
-let row2 = [0, 0, 0, 0, 0];
-let row3 = [0, 0, 0, 0, 0];
-let row4 = [0, 0, 0, 0, 0];
-let row5 = [0, 0, 0, 0, 0];
-
-let row1Ex = [0, 0, 0, 0, 0];
-let row2Ex = [0, 0, 0, 0, 0];
-let row3Ex = [0, 0, 0, 0, 0];
-let row4Ex = [0, 0, 0, 0, 0];
-let row5Ex = [0, 0, 0, 0, 0];
-
-function ResetMineField() {
-  row1 = [0, 0, 0, 0, 0];
-  row2 = [0, 0, 0, 0, 0];
-  row3 = [0, 0, 0, 0, 0];
-  row4 = [0, 0, 0, 0, 0];
-  row5 = [0, 0, 0, 0, 0];
-}
-
-function ResetMineSquares() {
-  let stringConvert: string = "";
-  // Draws the black and white squares of the board.
-  let valueToPrint: string = '';
-  for (let i = 0; i < 5; i++) {
-    for (let j = 0; j < 5; j++) {
-      // if j is even, squareColor is black, else white
-      if (i % 2 == 0)
-        squareColor = j % 2 == 0 ? "black" : "white";
-      else
-        squareColor = j % 2 == 0 ? "white" : "black";
-      DrawRectangle(i * 80, j * 80, 80, 80, squareColor);
-    }
-  }
-  for (let k = 0; k < 5; k++) {
-    let squareColorOdd = k % 2 == 0 ? "white" : "black";
-    let squareColorEven = k % 2 == 0 ? "black" : "white";
-    if (row1Ex[k] == 1) {
-      if (row1[k] == 10)
-        stringConvert = "\u{1F4A3}";
-      else
-        stringConvert = row1[k].toString();
-      DrawText(stringConvert, k * 80 + 30, 40, "24px Arial", squareColorOdd);
-      textInput1.value =stringConvert + " in row1[" + k + "]";
-    }
-    if (row2Ex[k] == 1) {
-      if (row2[k] == 10)
-        stringConvert = "\u{1F4A3}";
-      else
-        stringConvert = row2[k].toString();
-      DrawText(stringConvert, k * 80 + 30, 120, "24px Arial", squareColorEven);
-      textInput1.value =stringConvert + " in row2[" + k + "]";
-    }
-    if (row3Ex[k] == 1) {
-      if (row3[k] == 10)
-        stringConvert = "\u{1F4A3}";
-      else
-        stringConvert = row3[k].toString();
-      DrawText(stringConvert, k * 80 + 30, 200, "24px Arial", squareColorOdd);
-      textInput1.value =stringConvert + " in row3[" + k + "]";
-    }
-    if (row4Ex[k] == 1) {
-      if (row4[k] == 10)
-        stringConvert = "\u{1F4A3}";
-      else
-        stringConvert = row4[k].toString();
-      DrawText(stringConvert, k * 80 + 30, 280, "24px Arial", squareColorEven);
-      textInput1.value =stringConvert + " in row4[" + k + "]";
-    }
-    if (row5Ex[k] == 1) {
-      if (row5[k] == 10)
-        stringConvert = "\u{1F4A3}";
-      else
-        stringConvert = row5[k].toString();
-      DrawText(stringConvert, k * 80 + 30, 360, "24px Arial", squareColorOdd);
-      textInput1.value =stringConvert + " in row5[" + k + "]";
-    }
-  }
-
-}
-
-
-
-
-class snake {
-  private y:number;
-  private x:number;
-
-  public constructor(x:number,y:number) {
-    this.y = y;
-    this.x = x;
-  }
-}
-
-// Game 4 variables
-let speed = 7;
-let tileCount = 20;
-let tileSize = CANVAS_WIDTH / tileCount - 2;
-let headX = 10;
-let headY = 10;
-let speedX = 0;
-let speedY = 0;
-
-let appleX = 5;
-let appleY = 5;
-let snakeParts: any[];
-let length = 1;
-let score = 0;
-
-
-
-
-
-
-
-
-
-
-
-/*
-*   E
-*    n
-*     d
-*      of Global Variables / functions
- */
-
-
-
-function UpdateVariables() {
-  squareRight = squareX + SQUARE_WIDTH;
-  squareBottom = squareY + SQUARE_HEIGHT;
-}
-
-
-window.onload = function() {
-  ctxGame1 = getCanvasRenderingContext2D(getCanvasElementById('SampleGame1'));
-  textInput1 = grabTextElement('textField1');
-
-  ResetGameOne();
-  ResetGameTwo();
-  ResetGameThree();
-  setInterval(CallAll, 1000/FRAMES_PER_SECOND);
-
-}
-
-function CallAll() {
-
-  let resetButtonActivate = msResetButton('msResetButton');
-
-  if (gameChoice == 3) {
-    resetButtonActivate.disabled = false;
-  } else {
-    resetButtonActivate.disabled = true;
-  }
-
-  addEventListener('keypress', (event) => {
-
-    if (gameChoice == 2) {
-      switch (event.code) {
-        case 'KeyA':
-          keys.left = true;
-          break;
-        case 'KeyD':
-          keys.right = true;
-          break;
-        case "Space":
-          keys.space = true;
-          break;
-      }
-    }
-  }); // KeyA, Enter, Quote
-
-  addEventListener('keyup', (event) => {
-      if (gameChoice == 2) {
-        switch (event.code) {
-          case 'KeyA':
-            keys.left = false;
-            break;
-          case 'KeyD':
-            keys.right = false;
-            break;
-          case "Space":
-            keys.space = false;
-            megaman.action.idle = true;
-            break;
-        }
-      }
-    }
-  ); // KeyA, Enter, Quote
-
-  DrawAll();
-  UpdateVariables();
-}
-
-function ResetGameOne() {
-  let ballX: number = 75;
-  let ballY: number = 75;
-  let ballSpeedX: number = 5;
-  let ballSpeedY: number = 7;
-  let mouseX:number, mouseY:number;
-}
+let megamanIdle1 = document.getElementById('megamanIdle1');
+let megamanIdle2 = document.getElementById('megamanIdle2');
+let elecManInsideFloor1 = document.getElementById('elecManInsideFloor1');
 
 function ResetGameTwo() {
   megaman.x = 176;
   megaman.y = 306;
 }
-
-function ResetGameThree() {
-  minesSet = false;
-  ResetMineField();
-  ResetMineSquares();
-}
-
 
 function rowColToArrayIndex(col:number, row:number) {
   return col + STAGE_COLS * row;
@@ -434,6 +256,160 @@ function DrawTracks() {
       }
     }
 }
+
+
+
+
+
+
+
+
+
+
+/******
+ *****
+ ****
+ ***
+ **Game 3: Minesweeper game variables
+ ***
+ ****
+ *****
+ ******/
+
+
+let mines = 5;
+let minesSet = false;
+
+let squareColor = '#00ff00';
+let row1 = [0, 0, 0, 0, 0];
+let row2 = [0, 0, 0, 0, 0];
+let row3 = [0, 0, 0, 0, 0];
+let row4 = [0, 0, 0, 0, 0];
+let row5 = [0, 0, 0, 0, 0];
+
+let row1Ex = [0, 0, 0, 0, 0];
+let row2Ex = [0, 0, 0, 0, 0];
+let row3Ex = [0, 0, 0, 0, 0];
+let row4Ex = [0, 0, 0, 0, 0];
+let row5Ex = [0, 0, 0, 0, 0];
+
+function ResetMineField() {
+  row1 = [0, 0, 0, 0, 0];
+  row2 = [0, 0, 0, 0, 0];
+  row3 = [0, 0, 0, 0, 0];
+  row4 = [0, 0, 0, 0, 0];
+  row5 = [0, 0, 0, 0, 0];
+}
+
+function ResetMineSquares() {
+  let stringConvert: string = "";
+  // Draws the black and white squares of the board.
+  let valueToPrint: string = '';
+  for (let i = 0; i < 5; i++) {
+    for (let j = 0; j < 5; j++) {
+      // if j is even, squareColor is black, else white
+      if (i % 2 == 0)
+        squareColor = j % 2 == 0 ? "black" : "white";
+      else
+        squareColor = j % 2 == 0 ? "white" : "black";
+      DrawRectangle(i * 80, j * 80, 80, 80, squareColor);
+    }
+  }
+  for (let k = 0; k < 5; k++) {
+    let squareColorOdd = k % 2 == 0 ? "white" : "black";
+    let squareColorEven = k % 2 == 0 ? "black" : "white";
+    if (row1Ex[k] == 1) {
+      if (row1[k] == 10) {
+        stringConvert = "\u{1F4A3}"; // Bomb
+        DrawText(stringConvert, k * 80 + 30, 40, "24px Arial", squareColorOdd);
+      } else {
+        stringConvert = row1[k].toString();
+        DrawText(stringConvert, k * 80 + 30, 40, "24px Arial", squareColorOdd);
+      }
+    } else if (row1Ex[k] == 11) {
+      stringConvert = "\u{1F6A9}"; // Flag
+      DrawText(stringConvert, k * 80 + 30, 40, "24px Arial", squareColorOdd);
+    } else if (row1Ex[k] == 12) {
+      stringConvert = "\u{2754}"; // Question Mark
+      DrawText(stringConvert, k * 80 + 30, 40, "24px Arial", squareColorOdd);
+    }
+
+    if (row2Ex[k] == 1) {
+      if (row2[k] == 10) {
+        stringConvert = "\u{1F4A3}"; // Bomb
+        DrawText(stringConvert, k * 80 + 30, 120, "24px Arial", squareColorEven);
+      } else {
+        stringConvert = row2[k].toString();
+        DrawText(stringConvert, k * 80 + 30, 120, "24px Arial", squareColorEven);
+      }
+    } else if (row2Ex[k] == 11) {
+      stringConvert = "\u{1F6A9}"; // Flag
+      DrawText(stringConvert, k * 80 + 30, 120, "24px Arial", squareColorEven);
+    } else if (row2Ex[k] == 12) {
+      stringConvert = "\u{2754}"; // Question Mark
+      DrawText(stringConvert, k * 80 + 30, 120, "24px Arial", squareColorEven);
+    }
+
+    if (row3Ex[k] == 1) {
+      if (row3[k] == 10) {
+        stringConvert = "\u{1F4A3}"; // Bomb
+        DrawText(stringConvert, k * 80 + 30, 200, "24px Arial", squareColorOdd);
+      } else {
+        stringConvert = row3[k].toString();
+        DrawText(stringConvert, k * 80 + 30, 200, "24px Arial", squareColorOdd);
+      }
+    } else if (row3Ex[k] == 11) {
+      stringConvert = "\u{1F6A9}"; // Flag
+      DrawText(stringConvert, k * 80 + 30, 200, "24px Arial", squareColorOdd);
+    } else if (row3Ex[k] == 12) {
+      stringConvert = "\u{2754}"; // Question Mark
+      DrawText(stringConvert, k * 80 + 30, 200, "24px Arial", squareColorOdd);
+    }
+
+    if (row4Ex[k] == 1) {
+      if (row4[k] == 10) {
+        stringConvert = "\u{1F4A3}"; // Bomb
+        DrawText(stringConvert, k * 80 + 30, 280, "24px Arial", squareColorEven);
+      } else {
+        stringConvert = row4[k].toString();
+        DrawText(stringConvert, k * 80 + 30, 280, "24px Arial", squareColorEven);
+      }
+    } else if (row4Ex[k] == 11) {
+      stringConvert = "\u{1F6A9}"; // Flag
+      DrawText(stringConvert, k * 80 + 30, 280, "24px Arial", squareColorEven);
+    } else if (row4Ex[k] == 12) {
+      stringConvert = "\u{2754}"; // Question Mark
+      DrawText(stringConvert, k * 80 + 30, 280, "24px Arial", squareColorEven);
+    }
+    if (row5Ex[k] == 1) {
+      if (row5[k] == 10) {
+        stringConvert = "\u{1F4A3}"; // Bomb
+        DrawText(stringConvert, k * 80 + 30, 360, "24px Arial", squareColorOdd);
+      } else {
+        stringConvert = row5[k].toString();
+        DrawText(stringConvert, k * 80 + 30, 360, "24px Arial", squareColorOdd);
+      }
+    } else if (row5Ex[k] == 11) {
+      stringConvert = "\u{1F6A9}"; // Flag
+      DrawText(stringConvert, k * 80 + 30, 360, "24px Arial", squareColorOdd);
+    } else if (row5Ex[k] == 12) {
+      stringConvert = "\u{2754}"; // Question Mark
+      DrawText(stringConvert, k * 80 + 30, 360, "24px Arial", squareColorOdd);
+    }
+  }
+}
+
+function ResetGameThree() {
+  minesSet = false;
+  ResetMineField();
+  row1Ex = [0, 0, 0, 0, 0];
+  row2Ex = [0, 0, 0, 0, 0];
+  row3Ex = [0, 0, 0, 0, 0];
+  row4Ex = [0, 0, 0, 0, 0];
+  row5Ex = [0, 0, 0, 0, 0];
+  ResetMineSquares();
+}
+
 // GetValueOfSquare will return the value of the squareOn parameter.
 const GetValueOfSquare = (squareOnF: number): number => {
   let rowNumber = Math.trunc(squareOnF / 5);
@@ -484,6 +460,232 @@ function SetValueOfSquare(x: number, setSquare: number) {
       break;
   }
 }
+
+
+
+
+
+
+/******
+ *****
+ ****
+ ***
+ **Game 4: Snake game variables
+ ***
+ ****
+ *****
+ ******/
+
+
+
+
+let speed = 1;
+let tileCount = 20;
+let tileSize = CANVAS_WIDTH / tileCount+2.5;
+let headX = 10;
+let headY = 10;
+let speedX = 0;
+let speedY = 0;
+
+let appleX = 5;
+let appleY = 5;
+let snakeParts:snake[];
+let length = 1;
+let score = 0;
+
+function ResetGameFour() {
+  speed = 1;
+  tileCount = 20;
+  tileSize = CANVAS_WIDTH / tileCount+2.5;
+  headX = 10;
+  headY = 10;
+  speedX = 0;
+  speedY = 0;
+  appleX = 5;
+  appleY = 5;
+  snakeParts = [];
+  length = 1;
+  score = 0;
+}
+
+
+
+
+
+
+
+
+/******
+ *****
+ ****
+ ***
+ **End of game-specific variables
+ ***
+ ****
+ *****
+ ******/
+
+
+
+
+
+
+
+function UpdateVariables() {
+
+
+}
+
+
+
+function CallAll() {
+
+  let resetButtonActivate = msResetButton('msResetButton');
+
+  if (gameChoice == 3) {
+    resetButtonActivate.disabled = false;
+  } else {
+    resetButtonActivate.disabled = true;
+  }
+
+  addEventListener('keypress', (event) => {
+
+    if (gameChoice == 2) {
+      switch (event.code) {
+        case 'KeyA':
+          keys.left = true;
+          break;
+        case 'KeyD':
+          keys.right = true;
+          break;
+        case "Space":
+          keys.space = true;
+          break;
+        case 'quote':
+          keys.quote = true;
+          break;
+        default:
+          break;
+      }
+    }
+
+    if (gameChoice == 4) {
+      switch (event.code) {
+        case 'KeyW':
+          if (speedY === 1) {
+            return;
+          }
+          speedY = -1;
+          speedX = 0;
+          break;
+        case 'KeyS':
+          if (speedY === -1) {
+            return;
+          }
+            speedY = 1;
+            speedX = 0;
+          break;
+        case 'KeyA':
+          if (speedX === 1) {
+            return;
+          }
+          speedX = -1;
+          speedY = 0;
+          break;
+        case 'KeyD':
+          if (speedX === -1) {
+            return;
+          }
+          speedX = 1;
+          speedY = 0;
+          break;
+        default:
+          break;
+      }
+    }
+  });
+
+  addEventListener('keyup', (event) => {
+      if (gameChoice == 2) {
+        switch (event.code) {
+          case 'KeyA':
+            keys.left = false;
+            break;
+          case 'KeyD':
+            keys.right = false;
+            break;
+          case "Space":
+            keys.space = false;
+            break;
+          case 'quote':
+            keys.quote = false;
+            break;
+          default:
+            break;
+        }
+      }
+    }
+  ); // KeyA, Enter, Quote
+
+  DrawAll();
+  UpdateVariables();
+}
+
+function DrawRectangle(x: number, y: number, width: number, height: number, color: string) {
+
+  if (color == "Clear")
+    ctxGame1.clearRect(x, y, width, height);
+  else {
+    ctxGame1.fillStyle = color;
+    ctxGame1.fillRect(x, y, width, height);
+  }
+}
+
+function DrawCircle(centerX: number, centerY: number, radius: number, fillColor: string | CanvasGradient | CanvasPattern) {
+  ctxGame1.fillStyle = fillColor;
+  ctxGame1.beginPath();
+  ctxGame1.arc(centerX, centerY, radius, 0, Math.PI * 2, true);
+  ctxGame1.fill();
+}
+
+function DrawText(message: string, x: number, y: number, font: string, color: string) {
+  ctxGame1.font = font;
+  ctxGame1.fillStyle = color;
+  ctxGame1.fillText(message, x, y);
+}
+
+
+window.onload = function() {
+  ctxGame1 = getCanvasRenderingContext2D(getCanvasElementById('SampleGame1'));
+
+  ResetGameOne();
+  ResetGameTwo();
+  ResetGameThree();
+  ResetGameFour();
+
+  setInterval(CallAll, 1000/framesPerSecond);
+
+}
+
+
+
+
+
+
+
+
+
+/******
+ *****
+ ****
+ ***
+ **End of Global Variables / functions
+ ***
+ ****
+ *****
+ ******/
+
+
 function DrawAll() {
   if (gameOneReset) {
     ResetGameOne();
@@ -497,6 +699,10 @@ function DrawAll() {
     ResetGameThree();
     gameThreeReset = false;
   }
+  if (gameFourReset) {
+    ResetGameFour();
+    gameFourReset = false;
+  }
 
 
   if (gameChoice == 1) {  // Pong Game
@@ -505,27 +711,11 @@ function DrawAll() {
     gameThreeReset = true;
     gameFourReset = true;
 
-    // let paddle2Y:number = 10;
-    // let paddle2X:number = 100;
-
-    let canvas: HTMLCanvasElement;
-    let ctx: CanvasRenderingContext2D;
-    let ballSpeed:number;
-
-
-
-    let getCanvasElementById = (id: 'SampleGame1'): HTMLCanvasElement => {
-      let canvasGame1 = document.getElementById(id);
-      if (!(canvasGame1 instanceof HTMLCanvasElement)) {
-        throw new Error('Can\'t access "${id}"');
-      }
-      return canvasGame1;
-    };
     canvas = getCanvasElementById('SampleGame1');
+    ctxGame1 = getCanvasRenderingContext2D(canvas);
 
     DrawRectangle(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 'black'); // Background
     DrawRectangle(paddleX, paddleY, 100, 10, '#0080ee'); // Bottom paddle
-    DrawRectangle(paddle2X,paddle2Y,PADDLE_WIDTH,PADDLE_HEIGHT, '#0080ee'); // Top/AI paddle
     DrawCircle(ballX += ballSpeedX, ballY += ballSpeedY, 10, 'white'); // Ball
     // DrawRectangle(paddleX, paddleY, 100, 10, '#0080ee'); // Background
 
@@ -538,42 +728,17 @@ function DrawAll() {
       paddleX = mouseX - (PADDLE_WIDTH / 2);
     });
 
-    if (ballY >= paddleY -15 && ballX >= paddleX && ballX <= paddleX + PADDLE_WIDTH) {  // If ball hits bottom paddle, it will bounce back.
+    if (ballY >= paddleY && ballX >= paddleX && ballX <= paddleX + PADDLE_WIDTH) {  // If ball hits bottom paddle, it will bounce back.
       ballSpeedY *= -1;
-    } else if (ballX <= 10 || ballX >= CANVAS_WIDTH - 30) {  // If ball hits left or right wall, it inverses its direction (bounces off wall).
+    } else if (ballX <= 10 || ballX >= CANVAS_WIDTH - 10) {  // If ball hits left or right wall, it inverses its direction (bounces off wall).
       ballSpeedX *= -1;
-    } else if (ballY <= 15) {  // If the ball hits the top wall, it inverses its direction (bounces off wall).
+    } else if (ballY <= 10) {  // If the ball hits the top wall, it inverses its direction (bounces off wall).
       ballSpeedY *= -1;
-      // ballReset();
     } else if (ballY >= CANVAS_HEIGHT - 10) {  // If the ball hits the bottom wall behind the paddle, it calls the ballReset function and resets the ball to the middle of the board.
       ballReset();
     }
 
-    //
-    // function DrawNet() {
-    //   for (let i=0; i < CANVAS_HEIGHT; i+=35) {
-    //     DrawRectangle(CANVAS_WIDTH / 2, i, 25, 5, '#c7c7c7');
-    //   }
-    // }
 
-    function AIPaddle() {
-      // Have the paddle2 chase after the ball.
-      // Have center of paddle2 follow ballY.
-
-      // Grab difference of ballY and paddle2Y.
-      // Paddle2Y follows ballY, and stop if the center is parallel to ballY.
-
-      getRandomSpeed();
-      if (paddle2Y /2 > ballY)
-        paddle2Y -= Math.abs(ballSpeedY) - ballSpeed;
-      else if (paddle2Y/2 < ballY)
-        paddle2Y += Math.abs(ballSpeedY) - ballSpeed;
-
-    }
-
-    function getRandomSpeed() {
-      ballSpeed = Math.random() * 3;
-    }
 
     function ballReset() {  // Simple function to reset the ball to the middle of the board.
       ballX = CANVAS_WIDTH / 2; // Sets ball to middle of the x-axis.
@@ -582,7 +747,7 @@ function DrawAll() {
 
 
   } else if (gameChoice == 2) { // Megaman Game
-    DrawRectangle(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, "#9bbc0f");  // Background
+    DrawRectangle(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, "#9bbc0f")
     DrawTracks();
     stageImage = new Image();
 
@@ -791,33 +956,62 @@ function DrawAll() {
     gameFourReset = true;
 
 
+
   } else if (gameChoice == 3) { // Minesweeper
     gameOneReset = true;
     gameTwoReset = true;
     gameThreeReset = false;
     gameFourReset = true;
 
+    canvas = getCanvasElementById('SampleGame1');
+    ctxGame1 = getCanvasRenderingContext2D(canvas);
 
-
-    let canvas: HTMLCanvasElement = getCanvasElementById('SampleGame1');
     let textInput2 = grabTextArea("textField2");
     let mouseButton;
     let rowClicked;
     let colClicked;
-    let valueToAdd:number = 0;
+    let valueToAdd: number = 0;
+
+    canvas.addEventListener('mousemove', function (evt: MouseEvent) {
+      if (gameChoice == 3) {
+        let rect = canvas.getBoundingClientRect(); // Position of mouse on page
+        let root = document.documentElement;
+        let crosshairImage = new Image();
+
+        mouseX = evt.clientX - rect.left - root.scrollLeft;
+        mouseY = evt.clientY - rect.top - root.scrollTop;
+
+        // These do the dirty work of which square the mouse is in.
+        rowClicked = Math.trunc(mouseY / 79);
+        colClicked = Math.trunc(mouseX / 79);
+
+        // Finds out if the row and column the mouse is over is black or white and sets the appropriate crosshair image.
+        if (rowClicked % 2 == 0 && colClicked % 2 == 0)
+          crosshairImage.src = "http://agamedesigner.info/appImages/AngularTesting/goldCrossHair.png";
+        else if (rowClicked % 2 == 0 && colClicked % 2 == 1)
+          crosshairImage.src = "http://agamedesigner.info/appImages/AngularTesting/darkGoldCrossHair.png";
+        else if (rowClicked % 2 == 1 && colClicked % 2 == 0)
+          crosshairImage.src = "http://agamedesigner.info/appImages/AngularTesting/darkGoldCrossHair.png";
+        else if (rowClicked % 2 == 1 && colClicked % 2 == 1)
+          crosshairImage.src = "http://agamedesigner.info/appImages/AngularTesting/goldCrossHair.png";
+
+        ResetMineSquares();
+        ctxGame1.drawImage(crosshairImage, colClicked * 81, rowClicked * 81);
+      }
+    });
     canvas.addEventListener('mousedown', function (evt: MouseEvent) {
+      if (gameChoice == 3) {
+        let rect = canvas.getBoundingClientRect(); // Position of mouse on page
+        let root = document.documentElement;
 
-        if (gameChoice == 3) {
-          let rect = canvas.getBoundingClientRect(); // Position of mouse on page
-          let root = document.documentElement;
+        mouseX = evt.clientX - rect.left - root.scrollLeft;
+        mouseY = evt.clientY - rect.top - root.scrollTop;
 
-          mouseX = evt.clientX - rect.left - root.scrollLeft;
-          mouseY = evt.clientY - rect.top - root.scrollTop;
+        valueToAdd = 1;
 
-          valueToAdd = 1;
-
-          rowClicked = Math.trunc(mouseY / 81);
-          colClicked = Math.trunc(mouseX / 81);
+        rowClicked = Math.trunc(mouseY / 81);
+        colClicked = Math.trunc(mouseX / 81);
+        if (evt.button == 0) {
           switch (rowClicked) {
             case 0:
               row1Ex[colClicked] = valueToAdd;
@@ -846,10 +1040,60 @@ function DrawAll() {
               ResetMineSquares();
               break;
           }
+        } else if (evt.button == 1) {
+          switch (rowClicked) {
+            case 0:
+              row1Ex[colClicked] = 12;
+              ResetMineSquares();
+              break;
+            case 1:
+              row2Ex[colClicked] = 12;
+              ResetMineSquares();
+              break;
+            case 2:
+              row3Ex[colClicked] = 12;
+              ResetMineSquares();
+              break;
+            case 3:
+              row4Ex[colClicked] = 12;
+              ResetMineSquares();
+              break;
+            case 4:
+              row5Ex[colClicked] = 12;
+              ResetMineSquares();
+              break;
+            default:
+              break;
+          }
+        } else if (evt.button == 2) {
+          switch (rowClicked) {
+            case 0:
+              row1Ex[colClicked] = 11;
+              ResetMineSquares();
+              break;
+            case 1:
+              row2Ex[colClicked] = 11;
+              ResetMineSquares();
+              break;
+            case 2:
+              row3Ex[colClicked] = 11;
+              ResetMineSquares();
+              break;
+            case 3:
+              row4Ex[colClicked] = 11;
+              ResetMineSquares();
+              break;
+            case 4:
+              row5Ex[colClicked] = 11;
+              ResetMineSquares();
+              break;
+            default:
+              break;
+          }
         }
+      }
 
     });
-
 
 
     // if the mines haven't been placed yet, nor the number of bombs on each square, and the active game is Minesweeper.
@@ -910,13 +1154,12 @@ function DrawAll() {
         squareDownLeft = -1, squareDownRight = -1;
 
 
-
       for (let checkSquare = 0; checkSquare < 25; checkSquare++) {
         // if the value of the current square is not 10 (a bomb).
         if (GetValueOfSquare(checkSquare) < 10) {
 
           // Checking for squares on the left end. If not, get the values like normal.
-          if (checkSquare % 5 == 0 ) {
+          if (checkSquare % 5 == 0) {
             squareLeft = -1;
             squareUpLeft = -1;
             squareDownLeft = -1;
@@ -990,96 +1233,51 @@ function DrawAll() {
       }  // for
 
 
-     textInput2.value = row1.toString() + "\n" + row2.toString() + "\n" + row3.toString() + "\n" + row4.toString() + "\n" + row5.toString();
-     // textInput2.value = row1Ex.toString() + "\n" + row2Ex.toString() + "\n" + row3Ex.toString() + "\n" + row4Ex.toString() + "\n" + row5Ex.toString();
+      //textInput2.value = row1.toString() + "\n" + row2.toString() + "\n" + row3.toString() + "\n" + row4.toString() + "\n" + row5.toString();
+       textInput2.value = row1Ex.toString() + "\n" + row2Ex.toString() + "\n" + row3Ex.toString() + "\n" + row4Ex.toString() + "\n" + row5Ex.toString();
 
       ResetMineSquares();
       minesSet = true;
 
 
     }
-  }
-  // The imported variable from game-list.ts tells if the user clicked the button "Reset Minesweeper Board".
-  if (clicked == true) {
-    minesSet = false;
+    // The imported variable from game-list.ts tells if the user clicked the button "Reset Minesweeper Board".
+    if (clicked == true) {
+      minesSet = false;
 
-    squareColor = '#00ff00';
-    row1 = [0, 0, 0, 0, 0];
-    row2 = [0, 0, 0, 0, 0];
-    row3 = [0, 0, 0, 0, 0];
-    row4 = [0, 0, 0, 0, 0];
-    row5 = [0, 0, 0, 0, 0];
+      squareColor = '#00ff00';
+      row1 = [0, 0, 0, 0, 0];
+      row2 = [0, 0, 0, 0, 0];
+      row3 = [0, 0, 0, 0, 0];
+      row4 = [0, 0, 0, 0, 0];
+      row5 = [0, 0, 0, 0, 0];
 
-    row1Ex = [0, 0, 0, 0, 0];
-    row2Ex = [0, 0, 0, 0, 0];
-    row3Ex = [0, 0, 0, 0, 0];
-    row4Ex = [0, 0, 0, 0, 0];
-    row5Ex = [0, 0, 0, 0, 0];
+      row1Ex = [0, 0, 0, 0, 0];
+      row2Ex = [0, 0, 0, 0, 0];
+      row3Ex = [0, 0, 0, 0, 0];
+      row4Ex = [0, 0, 0, 0, 0];
+      row5Ex = [0, 0, 0, 0, 0];
 
-    ResetMineSquares();
+      ResetMineSquares();
 
-    // This is the static method in the game-list.ts.
-    GameListComponent.MinesweeperResetFalse();
+      // This is the static method in the game-list.ts.
+      GameListComponent.MinesweeperResetFalse();
 
-  }
-  else if (gameChoice == 4) {
-    // let canvas:HTMLCanvasElement;
-    let ctx:CanvasRenderingContext2D;
+    }
 
+  } else if (gameChoice == 4) {
     gameOneReset = true;
     gameTwoReset = true;
     gameThreeReset = true;
     gameFourReset = false;
 
-    if (gameFourReset) {
-      ResetGameFour();
-      gameFourReset = false;
-    }
-    function ResetGameFour() {
-      speed = 7;
-      tileCount = 20;
-      tileSize = CANVAS_WIDTH / tileCount - 2;
-      headX = 10;
-      headY = 10;
-      speedX = 0;
-      speedY = 0;
-
-      appleX = 5;
-      appleY = 5;
-      length = 1;
-      score = 0;
-
-      draw();
-    }
-
-
-
-
-
-
-
-    function draw() { // Gameplay loop.
-      changePos();
-
-      let result = isGameOver();
-      if (result) return;
-      clearScreen();
-      checkCollision();
-      drawApple();
-      drawSnake();
-      drawScore();
-      if (score > 3) speed = 10;
-      if (score > 5) speed = 13;
-      if (score > 7) speed = 16;
-      if (score > 9) speed = 19;
-      if (score > 12) speed = 22;
-      setTimeout(draw, 1000/speed);
-    }
+    canvas = getCanvasElementById('SampleGame1');
+    ctxGame1 = getCanvasRenderingContext2D(canvas);
 
     function drawScore() {
-      ctx.fillStyle = 'white';
-      ctx.font = '10px Verdana';
-      ctx.fillText("Score " + score, CANVAS_WIDTH - 50, 10);
+      ctxGame1.fillStyle = 'white';
+      ctxGame1.font = '10px Verdana';
+      ctxGame1.fillText("Score " + score, canvas.width - 50, 10);
     }
 
     function isGameOver() {
@@ -1104,7 +1302,7 @@ function DrawAll() {
       // Check if snake hits itself. If so, gameOver becomes true and triggers game over text.
       for (let i = 0; i < snakeParts.length; i++) {
         let part = snakeParts[i];
-        if (part.x == headX && part.y == headY) {
+        if (part.x === headX && part.y === headY) {
           gameOver = true;
           break;
         }
@@ -1113,14 +1311,15 @@ function DrawAll() {
 
       // If gameOver is true, it prints gradient colored text and stops the game.
       if (gameOver) {
-        ctx.fillStyle = 'white';
-        ctx.font = '50px Verdana';
-        let gradient = ctx.createLinearGradient(0, 0, CANVAS_WIDTH, 0);
-        gradient.addColorStop(Number("0"), "magenta");
-        gradient.addColorStop(Number("0.5"), "blue");
-        gradient.addColorStop(Number("1.0"), "red");
-        ctx.fillStyle = gradient;
-        ctx.fillText("Game Over", CANVAS_WIDTH / 6.5, CANVAS_HEIGHT / 2);
+        clearScreen();
+        ctxGame1.fillStyle = 'white';
+        ctxGame1.font = '50px Verdana';
+        let gradient = ctxGame1.createLinearGradient(0, 0, canvas.width, 0);
+        gradient.addColorStop(0, "magenta");
+        gradient.addColorStop(0.5, "blue");
+        gradient.addColorStop(1.0, "red");
+        ctxGame1.fillStyle = gradient;
+        ctxGame1.fillText("Game Over", canvas.width / 6.5, canvas.height / 2);
       }
       return gameOver;
     }
@@ -1128,8 +1327,8 @@ function DrawAll() {
 
     function clearScreen() {
       // Creates the black background
-      ctx.fillStyle = 'black';
-      ctx.fillRect(0,0, CANVAS_WIDTH, CANVAS_HEIGHT);
+      ctxGame1.fillStyle = 'black';
+      ctxGame1.fillRect(0, 0, canvas.width, canvas.height);
     }
 
     function changePos() {
@@ -1140,8 +1339,8 @@ function DrawAll() {
 
     function drawApple() {
       // Draws apple and makes it red.
-      ctx.fillStyle = 'red';
-      ctx.fillRect(appleX * tileCount, appleY * tileCount, tileSize, tileSize);
+      ctxGame1.fillStyle = 'red';
+      ctxGame1.fillRect(appleX * tileCount, appleY * tileCount, tileSize, tileSize);
     }
 
     function checkCollision() {
@@ -1157,10 +1356,10 @@ function DrawAll() {
 
     function drawSnake() {
       // Body of the snake. Adds a new part to the snake every time an apple is eaten.
-      ctx.fillStyle = 'green';
+      ctxGame1.fillStyle = 'green';
       for (let i = 0; i < snakeParts.length; i++) {
         let part = snakeParts[i];
-        ctx.fillRect(part.x * tileCount, part.y * tileCount, tileSize, tileSize);
+        ctxGame1.fillRect(part.x * tileCount, part.y * tileCount, tileSize, tileSize);
       }
 
       // Puts an item at the end of the snakeParts array
@@ -1170,37 +1369,30 @@ function DrawAll() {
       }
 
       // Head of the snake
-      ctx.fillStyle = 'orange';
-      ctx.fillRect(headX * tileCount, headY * tileCount, tileSize, tileSize);
+      ctxGame1.fillStyle = 'orange';
+      ctxGame1.fillRect(headX * tileCount, headY * tileCount, tileSize, tileSize);
     }
 
-    document.body.addEventListener('keydown', keyDown);
-// Checks if the user has pressed a direction key. If so, it changes the direction of the snake to that direction.
-    function keyDown(evt: { keyCode: number; }) {
-      if(evt.keyCode === 38){  // up
-        if (speedY === 1) { return }
-        speedY = -1;
-        speedX = 0;
-      }
-      if(evt.keyCode === 40){  // down
-        if (speedY === -1) { return }
-        speedY = 1;
-        speedX = 0;
-      }
-      if(evt.keyCode === 37){  // left
-        if (speedX === 1) { return }
-        speedX = -1;
-        speedY = 0;
-      }
-      if(evt.keyCode === 39){  // right
-        if (speedX === -1) { return }
-        speedX = 1;
-        speedY = 0;
-      }
-    }
+    function draw() { // Gameplay loop.
+      changePos();
 
+      let result = isGameOver();
+      if (result) {
+        return;
+      }
+      clearScreen();
+      checkCollision();
+      drawApple();
+      drawSnake();
+      drawScore();
+      if (score < 2) speed = 1;
+      if (score > 2) speed = 10;
+      if (score > 4) speed = 12;
+      if (score > 7) speed = 14;
+      if (score > 9) speed = 16;
+      if (score > 12) speed = 20;
+    }
     draw();
-
   }
 }
 
@@ -1208,26 +1400,7 @@ function DrawAll() {
 
 
 
-function DrawRectangle(x:number, y:number, width:number, height:number, color:string) {
 
-  if (color == "Clear")
-    ctxGame1.clearRect(x, y, width, height);
-  else {
-    ctxGame1.fillStyle = color;
-    ctxGame1.fillRect(x, y, width, height);
-  }
-}
 
-function DrawCircle(centerX: number, centerY: number, radius: number, fillColor: string | CanvasGradient | CanvasPattern) {
-  ctxGame1.fillStyle = fillColor;
-  ctxGame1.beginPath();
-  ctxGame1.arc(centerX, centerY, radius, 0, Math.PI*2, true);
-  ctxGame1.fill();
-}
 
-function DrawText(message:string, x:number, y:number, font:string, color:string) {
-  ctxGame1.font = font;
-  ctxGame1.fillStyle = color;
-  ctxGame1.fillText(message, x, y);
-}
 
