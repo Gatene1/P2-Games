@@ -532,7 +532,7 @@ function DrawAll() {
     canvas.addEventListener('mousemove', function (evt: MouseEvent) {
       let rect = canvas.getBoundingClientRect(); // Position of mouse on page
       let root = document.documentElement;
-      DrawNet();
+
 
       mouseX = evt.clientX - rect.left - root.scrollLeft;
       paddleX = mouseX - (PADDLE_WIDTH / 2);
@@ -549,12 +549,12 @@ function DrawAll() {
       ballReset();
     }
 
-
-    function DrawNet() {
-      for (let i=0; i < CANVAS_HEIGHT; i+=35) {
-        DrawRectangle(CANVAS_WIDTH / 2, i, 25, 5, '#c7c7c7');
-      }
-    }
+    //
+    // function DrawNet() {
+    //   for (let i=0; i < CANVAS_HEIGHT; i+=35) {
+    //     DrawRectangle(CANVAS_WIDTH / 2, i, 25, 5, '#c7c7c7');
+    //   }
+    // }
 
     function AIPaddle() {
       // Have the paddle2 chase after the ball.
