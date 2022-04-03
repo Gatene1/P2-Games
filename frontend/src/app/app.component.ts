@@ -744,11 +744,11 @@ function DrawAll() {
       paddleX = mouseX - (PADDLE_WIDTH / 2);
     });
 
-    if (ballY >= paddleY && ballX >= paddleX && ballX <= paddleX + PADDLE_WIDTH) {  // If ball hits bottom paddle, it will bounce back.
+    if (ballY >= paddleY - 12 && ballX >= paddleX && ballX <= paddleX + PADDLE_WIDTH) {  // If ball hits bottom paddle, it will bounce back.
       ballSpeedY *= -1;
     } else if (ballX <= 10 || ballX >= CANVAS_WIDTH - 10) {  // If ball hits left or right wall, it inverses its direction (bounces off wall).
       ballSpeedX *= -1;
-    } else if (ballY <= 10) {  // If the ball hits the top wall, it inverses its direction (bounces off wall).
+    } else if (ballY <= 12) {  // If the ball hits the top wall, it inverses its direction (bounces off wall).
       ballSpeedY *= -1;
     } else if (ballY >= CANVAS_HEIGHT - 10) {  // If the ball hits the bottom wall behind the paddle, it calls the ballReset function and resets the ball to the middle of the board.
       ballReset();

@@ -37,8 +37,6 @@
   and continue to move about the canvas, while bouncing off the other bounding walls.
 
 
-
-
 ## Mega-man Prototype
 - User can move the character left and right using the `A` and `D` keys.
 - If the character doesn't move, it will trigger an idle animation where he blinks every few seconds.
@@ -50,10 +48,13 @@
 - Upon navigating to the Minesweeper tab, the user is presented with an empty grid with bombs
   hidden randomly under tiles.
 - Each tile contains a number or a bomb, click the tile to reveal its contents.
-- When a number is revealed, the number equals the amount of bombs that are adjacent to that tile.
-- When a bomb is revealed, game is lost and the player can click the `Reset` button above the 
-  playing field.
-- Game is won if all non-bomb tiles are discovered.
+- If the tile contains a bomb, the user loses the game.
+- If the user reveals all the tiles without revealing any bombs, the user wins the game.
+- The user can reset the game by clicking the `Reset` button.
+- Right-click on a tile to flag it as a bomb.
+- When a number is revealed, the number equals the number of bombs in the adjacent tiles.
+
+
 
 ## Snake
 - This game will remain paused until the snake is moved. 
@@ -62,4 +63,3 @@
 - Each apple eaten increases the snake's length by one segment and increases your score by one.
 - Snake gradually gets faster as its length increases.
 - Game is lost if the user runs into a bounding wall or if it runs into its own body.
-- 
