@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Snake</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    #glass{
+      background: linear-gradient(135deg, rgba(103, 46, 46, 0.3),rgba(255,255,255,0));
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-radius: 10px; border: 5px solid rgba(255, 255, 255, .3);
+      box-shadow: 0 8px 32px 0 rgba(0,0,0,0.37);
+    }
+    .blue {
+      margin: 10px;
+      padding: 0;
+
+    }
+    canvas {
+     box-shadow: black 20px 10px 50px;
+    }
+  </style>
+</head>
+<body>
+<h1 class="blue">Snake </h1>
+<div id="glass">
+  <canvas id="game" width="400" height="400"> </canvas>
+</div>
+</body>
+<script src="snake.js"></script>
+</html>

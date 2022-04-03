@@ -17,17 +17,18 @@
 
 
 ## User Stories
-- User has access to 3 different games on the landing page:
+- User has access to 4 different games on the landing page:
   - `Pong`
   - `Mega-man prototype`
   - `Minesweeper`
+  - `Snake`
 
 
 - User can navigate to the game page by clicking on the buttons with the desired game name.
 - This will change the contents of the canvas as well as reset the others games.
 
 
-## Pong Info:
+## Pong
 - The game is a single player game where the user can move the paddle left
   and right using the mouse while hovering over the canvas.
 - The game is played by using the paddle to stop the ball from reaching 
@@ -36,12 +37,29 @@
   and continue to move about the canvas, while bouncing off the other bounding walls.
 
 
-
-
-## Mega-man Prototype Info:
+## Mega-man Prototype
 - User can move the character left and right using the `A` and `D` keys.
 - If the character doesn't move, it will trigger an idle animation where he blinks every few seconds.
 - User can jump by pressing the `Spacebar` and the character will jump higher the longer it is pressed.
 
 
-## Minesweeper Info:
+## Minesweeper
+- The object of this game is to reveal all the tiles that don't contain a bomb.
+- Upon navigating to the Minesweeper tab, the user is presented with an empty grid with bombs
+  hidden randomly under tiles.
+- Each tile contains a number or a bomb, click the tile to reveal its contents.
+- If the tile contains a bomb, the user loses the game.
+- If the user reveals all the tiles without revealing any bombs, the user wins the game.
+- The user can reset the game by clicking the `Reset` button.
+- Right-click on a tile to flag it as a bomb.
+- When a number is revealed, the number equals the number of bombs in the adjacent tiles.
+
+
+
+## Snake
+- This game will remain paused until the snake is moved. 
+- Control the snake using the `Arrow` keys.
+- The object of the game is to move the snake about the board collecting apples.
+- Each apple eaten increases the snake's length by one segment and increases your score by one.
+- Snake gradually gets faster as its length increases.
+- Game is lost if the user runs into a bounding wall or if it runs into its own body.

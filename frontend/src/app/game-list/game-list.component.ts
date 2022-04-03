@@ -8,6 +8,7 @@ import { minesweeperButton } from "./gameAddons";
 
 let gameChoice = 3;
 let startOver = false;
+let minesweeperStartOver = false;
 let clicked = false;
 
 @Component({
@@ -22,6 +23,8 @@ export class GameListComponent {
   @Input() gameAddon!: GameAddon;
   gameButton = minesweeperButton;
 
+
+
   share(game:number) {
     if (game == 1) {
       gameChoice = 1;
@@ -31,6 +34,10 @@ export class GameListComponent {
       startOver = true;
     } else if (game == 3) {
       gameChoice = 3;
+      minesweeperStartOver = true;
+    }
+    else if (game == 4) {
+      gameChoice = 4;
       startOver = true;
     }
   }
@@ -44,5 +51,6 @@ export class GameListComponent {
   }
 }
 
-export { gameChoice, startOver, clicked};
+
+export { gameChoice, startOver, minesweeperStartOver, clicked};
 
