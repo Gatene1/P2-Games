@@ -739,6 +739,7 @@ function DrawAll() {
       let rect = canvas.getBoundingClientRect(); // Position of mouse on page
       let root = document.documentElement;
 
+
       mouseX = evt.clientX - rect.left - root.scrollLeft;
       paddleX = mouseX - (PADDLE_WIDTH / 2);
     });
@@ -752,6 +753,7 @@ function DrawAll() {
     } else if (ballY >= CANVAS_HEIGHT - 10) {  // If the ball hits the bottom wall behind the paddle, it calls the ballReset function and resets the ball to the middle of the board.
       ballReset();
     }
+
 
 
     function ballReset() {  // Simple function to reset the ball to the middle of the board.
