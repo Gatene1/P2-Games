@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="762a71ff-d528-4e56-b9f8-dc38c6d87cea" name="Changes" comment="Updated from main branch">
+    <list default="true" id="762a71ff-d528-4e56-b9f8-dc38c6d87cea" name="Changes" comment="Added divs with images, need to get images to switch opacity so that only desired background is displayed.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/revature/p2Group1/P2Group1Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/revature/p2Group1/P2Group1Application.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontend/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -145,7 +145,7 @@
       <workItem from="1648748196478" duration="384000" />
       <workItem from="1648759020406" duration="1279000" />
       <workItem from="1648761093488" duration="182000" />
-      <workItem from="1649006319758" duration="15022000" />
+      <workItem from="1649006319758" duration="17122000" />
     </task>
     <task id="LOCAL-00001" summary="refactoring to include spring backend tool">
       <created>1648666809008</created>
@@ -189,7 +189,14 @@
       <option name="project" value="LOCAL" />
       <updated>1649006973826</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="Added divs with images, need to get images to switch opacity so that only desired background is displayed.">
+      <created>1649021907430</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1649021907430</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -213,6 +220,7 @@
     <MESSAGE value="New, correct, beginnings." />
     <MESSAGE value="Set up environment&#10;Added npm" />
     <MESSAGE value="Updated from main branch" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated from main branch" />
+    <MESSAGE value="Added divs with images, need to get images to switch opacity so that only desired background is displayed." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added divs with images, need to get images to switch opacity so that only desired background is displayed." />
   </component>
 </project>
