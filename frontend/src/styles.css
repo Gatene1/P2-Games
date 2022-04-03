@@ -1,3 +1,120 @@
-body { margin:0; padding:0; background-image:linear-gradient(#5979a0,#7fa1ba);
+/*body { margin:0; padding:0; background-image:linear-gradient(#5979a0,#7fa1ba);*/
+/*}*/
+body {
+  height: 100vh;
+  width: 100vh;
+  padding:0px; background-image:linear-gradient(#5979a0,#7fa1ba);
+  overflow-x: hidden;
+  overflow-y: hidden;
+
 
 }/* You can add global styles to this file, and also import other style files */
+div1.imageMega{
+  /*background-image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fvignette.wikia.nocookie.net%2Fvsbattles%2Fimages%2Ff%2Ffe%2FMega_Man_-_Version_11.png%2Frevision%2Flatest%3Fcb%3D20180529162940&f=1&nofb=1");*/
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  margin: auto;
+  background-repeat: no-repeat;
+  /*background-position-y: 50px;*/
+  /*z-index: inherit;*/
+  /*border-style: solid;*/
+  /*border-size: 2px;*/
+  opacity: unset;
+}
+div2.imagePong{
+  /*image: url("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2F4vector.com%2Fi%2Ffree-vector-pong-clip-art_116701_Pong_clip_art_medium.png&f=1&nofb=1");*/
+  width: 100%;
+  height: 100%;
+  /*background-size: cover;*/
+  /*margin: 30%;*/
+  /*background-repeat: no-repeat;*/
+  /*background-position-x: 500px;*/
+  /*background-position-y: 800px;*/
+  /*z-index: inherit;*/
+  /*border-style: solid;*/
+  /*border-size: 2px;*/
+  position: absolute;
+  top: 0%;
+  opacity: unset;
+
+}
+div3.imageMineSweeper{
+  width: 100%;
+  height: 100%;
+  /*background-size: cover;*/
+  /*margin: 30%;*/
+  /*background-repeat: no-repeat;*/
+  /*z-index: inherit;*/
+  top: 0%;
+  opacity: unset;
+
+}
+
+div4.imageSnake{
+  width: 100%;
+  height: 100%;
+  /*background-size: cover;*/
+  /*margin: 30%;*/
+  /*background-repeat: no-repeat;*/
+  /*z-index: inherit;*/
+  top: 0%;
+  opacity: unset;
+
+}
+
+
+img.imageMega{
+  width: 30%;
+  height: 60%;
+  right: 5%;
+  bottom: 5%;
+  margin: auto;
+  display: block;
+  position: absolute;
+  opacity: unset;
+
+}
+img.imagePong{
+  width: 20%;
+  height: 20%;
+  top: 80%;
+  /*right: 21%;*/
+  /*bottom: 0%;*/
+  position: absolute;
+  opacity: unset;
+
+}
+img.imageMineSweeper {
+  width: 10%;
+  height: 15%;
+  top: 5%;
+  left: 20%;
+  display: block;
+  /*right: 1%;*/
+  /*bottom: 0%;*/
+  position: absolute;
+  opacity: unset;
+}
+
+
+img.imageSnake{
+  width: 10%;
+  height: 15%;
+  top: 5%;
+  left: 20%;
+  display: block;
+  /*right: 1%;*/
+  /*bottom: 0%;*/
+  position: absolute;
+  opacity: unset;
+
+}
+
+/*
+pong img: https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fvistapointe.net%2Fimages%2Fpong-9.jpg&f=1&nofb=1
+megaman img: https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fwallpaperset.com%2Fw%2Ffull%2Fb%2F1%2F5%2F483651.jpg&f=1&nofb=1
+minesweeper img: https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fpre00.deviantart.net%2F0425%2Fth%2Fpre%2Fi%2F2013%2F143%2F7%2F3%2Fminesweeper_by_lonmcgregor-d64klm0.jpg&f=1&nofb=1
+*/
+
+/* You can add global styles to this file, and also import other style files */

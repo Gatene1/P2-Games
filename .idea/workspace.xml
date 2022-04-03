@@ -4,8 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="762a71ff-d528-4e56-b9f8-dc38c6d87cea" name="Changes" comment="Set up environment&#10;Added npm">
+    <list default="true" id="762a71ff-d528-4e56-b9f8-dc38c6d87cea" name="Changes" comment="Updated from main branch">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/main.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/main.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -21,6 +24,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="TypeScript File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -97,10 +101,11 @@
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-    <property name="ts.external.directory.path" value="C:\Users\Minec\Downloads\p2-Group1\frontend\node_modules\typescript\lib" />
+    <property name="ts.external.directory.path" value="C:\Users\K\IdeaProjects\p2-Group1v2\frontend\node_modules\typescript\lib" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\K\IdeaProjects\p2-Group1v2\frontend\src" />
       <recent name="C:\Users\Minec\Downloads\p2-Group1\backend" />
     </key>
   </component>
@@ -140,7 +145,7 @@
       <workItem from="1648748196478" duration="384000" />
       <workItem from="1648759020406" duration="1279000" />
       <workItem from="1648761093488" duration="182000" />
-      <workItem from="1649006319758" duration="539000" />
+      <workItem from="1649006319758" duration="15022000" />
     </task>
     <task id="LOCAL-00001" summary="refactoring to include spring backend tool">
       <created>1648666809008</created>
@@ -177,7 +182,14 @@
       <option name="project" value="LOCAL" />
       <updated>1648760834119</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Updated from main branch">
+      <created>1649006973826</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1649006973826</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -200,6 +212,7 @@
     <MESSAGE value="syncing files with our first attempt" />
     <MESSAGE value="New, correct, beginnings." />
     <MESSAGE value="Set up environment&#10;Added npm" />
-    <option name="LAST_COMMIT_MESSAGE" value="Set up environment&#10;Added npm" />
+    <MESSAGE value="Updated from main branch" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated from main branch" />
   </component>
 </project>
