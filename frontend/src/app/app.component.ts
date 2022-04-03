@@ -1,14 +1,14 @@
 // noinspection TypeScriptCheckImport
 
 import { Component } from '@angular/core';
-import { gameChoice, startOver, clicked, GameListComponent} from "./game-list/game-list.component";
+import { gameChoice, startOver, minesweeperStartOver, clicked, GameListComponent} from "./game-list/game-list.component";
 
 import { Snake } from './Snake';
 import { snake } from './Snake';
 
 import { GameAddon } from './game-list/gameAddons';
 import { minesweeperButton } from './game-list/gameAddons';
-import {TimeInterval} from "rxjs";
+import {min, TimeInterval} from "rxjs";
 
 @Component({
   selector: 'app-root',
@@ -279,6 +279,12 @@ function DrawTracks() {
 
 let mines = 5;
 let minesSet = false;
+let minesweeperGameOver = false;
+let minesweeperGameWon = false;
+let minesweeperGameOverLogo = 400;
+let minesweeperGameOverGradient = 0.2;
+let minesweeperGameOverGradientIncrement = 0.01;
+let minesweeperGameOverLogoSpeed = -5;
 
 let squareColor = '#00ff00';
 let row1 = [0, 0, 0, 0, 0];
@@ -302,6 +308,8 @@ function ResetMineField() {
 }
 
 function ResetMineSquares() {
+  minesweeperGameOverLogoSpeed = -5
+  minesweeperGameOverGradientIncrement = 0.01;
   let stringConvert: string = "";
   // Draws the black and white squares of the board.
   let valueToPrint: string = '';
@@ -322,6 +330,7 @@ function ResetMineSquares() {
       if (row1[k] == 10) {
         stringConvert = "\u{1F4A3}"; // Bomb
         DrawText(stringConvert, k * 80 + 30, 40, "24px Arial", squareColorOdd);
+        minesweeperGameOver = true;
       } else {
         stringConvert = row1[k].toString();
         DrawText(stringConvert, k * 80 + 30, 40, "24px Arial", squareColorOdd);
@@ -338,6 +347,7 @@ function ResetMineSquares() {
       if (row2[k] == 10) {
         stringConvert = "\u{1F4A3}"; // Bomb
         DrawText(stringConvert, k * 80 + 30, 120, "24px Arial", squareColorEven);
+        minesweeperGameOver = true;
       } else {
         stringConvert = row2[k].toString();
         DrawText(stringConvert, k * 80 + 30, 120, "24px Arial", squareColorEven);
@@ -354,6 +364,7 @@ function ResetMineSquares() {
       if (row3[k] == 10) {
         stringConvert = "\u{1F4A3}"; // Bomb
         DrawText(stringConvert, k * 80 + 30, 200, "24px Arial", squareColorOdd);
+        minesweeperGameOver = true;
       } else {
         stringConvert = row3[k].toString();
         DrawText(stringConvert, k * 80 + 30, 200, "24px Arial", squareColorOdd);
@@ -370,6 +381,7 @@ function ResetMineSquares() {
       if (row4[k] == 10) {
         stringConvert = "\u{1F4A3}"; // Bomb
         DrawText(stringConvert, k * 80 + 30, 280, "24px Arial", squareColorEven);
+        minesweeperGameOver = true;
       } else {
         stringConvert = row4[k].toString();
         DrawText(stringConvert, k * 80 + 30, 280, "24px Arial", squareColorEven);
@@ -385,6 +397,7 @@ function ResetMineSquares() {
       if (row5[k] == 10) {
         stringConvert = "\u{1F4A3}"; // Bomb
         DrawText(stringConvert, k * 80 + 30, 360, "24px Arial", squareColorOdd);
+        minesweeperGameOver = true;
       } else {
         stringConvert = row5[k].toString();
         DrawText(stringConvert, k * 80 + 30, 360, "24px Arial", squareColorOdd);
@@ -399,8 +412,12 @@ function ResetMineSquares() {
   }
 }
 
+if (minesweeperStartOver)
+  ResetGameThree();
+
 function ResetGameThree() {
   minesSet = false;
+  minesweeperGameOver = false;
   ResetMineField();
   row1Ex = [0, 0, 0, 0, 0];
   row2Ex = [0, 0, 0, 0, 0];
@@ -704,7 +721,6 @@ function DrawAll() {
     gameFourReset = false;
   }
 
-
   if (gameChoice == 1) {  // Pong Game
     gameOneReset = false;
     gameTwoReset = true;
@@ -956,6 +972,9 @@ function DrawAll() {
 
 
   } else if (gameChoice == 3) { // Minesweeper
+    if (gameChoice == 3 && startOver)
+      ResetGameThree();
+
     gameOneReset = true;
     gameTwoReset = true;
     gameThreeReset = false;
@@ -964,6 +983,9 @@ function DrawAll() {
     canvas = getCanvasElementById('SampleGame1');
     ctxGame1 = getCanvasRenderingContext2D(canvas);
 
+
+    GameOver();
+
     let textInput2 = grabTextArea("textField2");
     let mouseButton;
     let rowClicked;
@@ -971,7 +993,7 @@ function DrawAll() {
     let valueToAdd: number = 0;
 
     canvas.addEventListener('mousemove', function (evt: MouseEvent) {
-      if (gameChoice == 3) {
+      if (gameChoice == 3 && !minesweeperGameOver) {
         let rect = canvas.getBoundingClientRect(); // Position of mouse on page
         let root = document.documentElement;
         let crosshairImage = new Image();
@@ -998,7 +1020,7 @@ function DrawAll() {
       }
     });
     canvas.addEventListener('mousedown', function (evt: MouseEvent) {
-      if (gameChoice == 3) {
+      if (gameChoice == 3 && !minesweeperGameOver) {
         let rect = canvas.getBoundingClientRect(); // Position of mouse on page
         let root = document.documentElement;
 
@@ -1232,7 +1254,7 @@ function DrawAll() {
 
 
       //textInput2.value = row1.toString() + "\n" + row2.toString() + "\n" + row3.toString() + "\n" + row4.toString() + "\n" + row5.toString();
-       textInput2.value = row1Ex.toString() + "\n" + row2Ex.toString() + "\n" + row3Ex.toString() + "\n" + row4Ex.toString() + "\n" + row5Ex.toString();
+      textInput2.value = row1Ex.toString() + "\n" + row2Ex.toString() + "\n" + row3Ex.toString() + "\n" + row4Ex.toString() + "\n" + row5Ex.toString();
 
       ResetMineSquares();
       minesSet = true;
@@ -1241,6 +1263,7 @@ function DrawAll() {
     }
     // The imported variable from game-list.ts tells if the user clicked the button "Reset Minesweeper Board".
     if (clicked == true) {
+      window.location.reload();
       minesSet = false;
 
       squareColor = '#00ff00';
@@ -1261,6 +1284,34 @@ function DrawAll() {
       // This is the static method in the game-list.ts.
       GameListComponent.MinesweeperResetFalse();
 
+    }
+
+    function DrawOpaqueBackground(gameOverOpacity: number) {
+      // This is the Game Over background, slightly see through.
+      ctxGame1.fillStyle = 'rgba(0, 0, 0, ' + gameOverOpacity + ')';
+      ctxGame1.fillRect(0, 0, canvas.width, canvas.height);
+    }
+
+    function GameOver() {
+      if (minesweeperGameOver) {
+        let thisTextInput: HTMLInputElement = <HTMLInputElement>document.getElementById('textField1');
+        ResetMineSquares();
+        if (minesweeperGameOverGradient == 1.0)
+          minesweeperGameOverGradientIncrement = 0;
+        DrawOpaqueBackground(minesweeperGameOverGradient += minesweeperGameOverGradientIncrement);
+        ctxGame1.fillStyle = 'white';
+        ctxGame1.font = '50px Arial';
+        let gradient = ctxGame1.createLinearGradient(0,0,canvas.width,0);
+        gradient.addColorStop(0,"magenta");
+        gradient.addColorStop(0.5,"blue");
+        gradient.addColorStop(1.0,"red");
+        ctxGame1.fillStyle = gradient;
+        if (minesweeperGameOverLogo <= CANVAS_WIDTH/2 - 125) {
+          minesweeperGameOverLogoSpeed = 0;
+        }
+        ctxGame1.fillText('Game Over', minesweeperGameOverLogo += minesweeperGameOverLogoSpeed, canvas.height / 2);
+      }
+      return;
     }
 
   } else if (gameChoice == 4) {
