@@ -83,10 +83,42 @@ let grabTextArea = (id: 'textField2') : HTMLTextAreaElement => {
 };
 
 let msResetButton = (id: 'msResetButton') : HTMLButtonElement => {
-  let msResetButton = document.getElementById(id);
-  if (!(msResetButton instanceof HTMLButtonElement))
+  let msResetButton2 = document.getElementById(id);
+  if (!(msResetButton2 instanceof HTMLButtonElement))
     throw new Error('Can\'t grab the button');
-  return msResetButton;
+  return msResetButton2;
+};
+
+let canvasDiv = (id: 'canvasDiv') : HTMLDivElement => {
+  let canvasDiv2 = document.getElementById(id);
+  if (!(canvasDiv2 instanceof HTMLDivElement))
+    throw new Error('Can\'t grab the div');
+  return canvasDiv2;
+};
+let megamanDiv = (id: 'imageMegaDiv') : HTMLDivElement => {
+  let canvasDiv3 = document.getElementById(id);
+  if (!(canvasDiv3 instanceof HTMLDivElement))
+    throw new Error('Can\'t grab the div');
+  return canvasDiv3;
+};
+
+let pongDiv = (id: 'imagePongDiv') : HTMLDivElement => {
+  let canvasDiv4 = document.getElementById(id);
+  if (!(canvasDiv4 instanceof HTMLDivElement))
+    throw new Error('Can\'t grab the div');
+  return canvasDiv4;
+};
+let minesweeperDiv = (id: 'imageMinesweeperDiv') : HTMLDivElement => {
+  let canvasDiv5 = document.getElementById(id);
+  if (!(canvasDiv5 instanceof HTMLDivElement))
+    throw new Error('Can\'t grab the div');
+  return canvasDiv5;
+};
+let snakeDiv = (id: 'imageSnakeDiv') : HTMLDivElement => {
+  let canvasDiv6 = document.getElementById(id);
+  if (!(canvasDiv6 instanceof HTMLDivElement))
+    throw new Error('Can\'t grab the div');
+  return canvasDiv6;
 };
 
 let gameOneReset = false;
@@ -132,6 +164,8 @@ function ResetGameOne() {
   let ballSpeedY: number = 7;
   let mouseX:number, mouseY:number;
 }
+
+let pongDiv2: HTMLDivElement;
 
 
 
@@ -184,6 +218,7 @@ let megamanMovingFrameCount = 0;
 let megamanJumpingFrameCount = 0;
 let megamanIdlingFrameMax = 120;
 let blinkCountThreshold = 126;
+let megamanDiv2: HTMLDivElement;
 
 const STAGE_COLS = 13;
 const STAGE_ROWS = 13;
@@ -285,6 +320,7 @@ let minesweeperGameOverLogo = 400;
 let minesweeperGameOverGradient = 0.2;
 let minesweeperGameOverGradientIncrement = 0.01;
 let minesweeperGameOverLogoSpeed = -5;
+let minesweeperDiv2: HTMLDivElement;
 
 let squareColor = '#00ff00';
 let row1 = [0, 0, 0, 0, 0];
@@ -525,6 +561,8 @@ function ResetGameFour() {
   score = 0;
 }
 
+let snakeDiv2: HTMLDivElement;
+
 
 
 
@@ -727,8 +765,24 @@ function DrawAll() {
     gameThreeReset = true;
     gameFourReset = true;
 
+
     canvas = getCanvasElementById('SampleGame1');
     ctxGame1 = getCanvasRenderingContext2D(canvas);
+    let canvasDivVar = canvasDiv('canvasDiv');
+
+
+    pongDiv2 = pongDiv('imagePongDiv');
+    megamanDiv2 = megamanDiv('imageMegaDiv');
+    minesweeperDiv2 = minesweeperDiv('imageMinesweeperDiv');
+    snakeDiv2 = snakeDiv('imageSnakeDiv');
+
+
+    pongDiv2.style.opacity = '1';
+    megamanDiv2.style.opacity = '0';
+    minesweeperDiv2.style.opacity = '0';
+    snakeDiv2.style.opacity = '0';
+
+    canvasDivVar.style.borderColor = "white";
 
     DrawRectangle(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, 'black'); // Background
     DrawRectangle(paddleX, paddleY, 100, 10, '#0080ee'); // Bottom paddle
@@ -766,6 +820,19 @@ function DrawAll() {
     DrawRectangle(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT, "#9bbc0f")
     DrawTracks();
     stageImage = new Image();
+    let canvasDivVar = canvasDiv('canvasDiv');
+
+    pongDiv2 = pongDiv('imagePongDiv');
+    megamanDiv2 = megamanDiv('imageMegaDiv');
+    minesweeperDiv2 = minesweeperDiv('imageMinesweeperDiv');
+    snakeDiv2 = snakeDiv('imageSnakeDiv');
+
+    pongDiv2.style.opacity = '0';
+    megamanDiv2.style.opacity = '1';
+    minesweeperDiv2.style.opacity = '0';
+    snakeDiv2.style.opacity = '0';
+
+    canvasDivVar.style.borderColor = "black";
 
     if (keys.space) {
       // I want to be able to hold the spacebar to jump higher, so I got rid of the if !action.jump
@@ -984,6 +1051,18 @@ function DrawAll() {
 
     canvas = getCanvasElementById('SampleGame1');
     ctxGame1 = getCanvasRenderingContext2D(canvas);
+    let canvasDivVar = canvasDiv('canvasDiv');
+    canvasDivVar.style.borderColor = "black";
+
+    pongDiv2 = pongDiv('imagePongDiv');
+    megamanDiv2 = megamanDiv('imageMegaDiv');
+    minesweeperDiv2 = minesweeperDiv('imageMinesweeperDiv');
+    snakeDiv2 = snakeDiv('imageSnakeDiv');
+
+    megamanDiv2.style.opacity = '0';
+    pongDiv2.style.opacity = '0';
+    minesweeperDiv2.style.opacity = '1';
+    snakeDiv2.style.opacity='0';
 
 
     GameOver();
@@ -1324,6 +1403,18 @@ function DrawAll() {
 
     canvas = getCanvasElementById('SampleGame1');
     ctxGame1 = getCanvasRenderingContext2D(canvas);
+    let canvasDivVar = canvasDiv('canvasDiv');
+    canvasDivVar.style.borderColor = 'black';
+
+    pongDiv2 = pongDiv('imagePongDiv');
+    megamanDiv2 = megamanDiv('imageMegaDiv');
+    minesweeperDiv2 = minesweeperDiv('imageMinesweeperDiv');
+    snakeDiv2 = snakeDiv('imageSnakeDiv');
+
+    pongDiv2.style.opacity = '0';
+    megamanDiv2.style.opacity = '0';
+    minesweeperDiv2.style.opacity = '0';
+    snakeDiv2.style.opacity = '1';
 
     function drawScore() {
       ctxGame1.fillStyle = 'white';
