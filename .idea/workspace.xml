@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="762a71ff-d528-4e56-b9f8-dc38c6d87cea" name="Changes" comment="Added divs with images, need to get images to switch opacity so that only desired background is displayed.">
+    <list default="true" id="762a71ff-d528-4e56-b9f8-dc38c6d87cea" name="Changes" comment="Minor updates and included our original snake game js and html files.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/revature/p2Group1/P2Group1Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/revature/p2Group1/P2Group1Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/styles.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -24,58 +21,13 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="TypeScript File" />
+        <option value="HTML File" />
         <option value="JavaScript File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
-    <excluded-from-favorite>
-      <branch-storage>
-        <map>
-          <entry type="LOCAL">
-            <value>
-              <list>
-                <branch-info repo="$PROJECT_DIR$" source="master" />
-              </list>
-            </value>
-          </entry>
-          <entry type="REMOTE">
-            <value>
-              <list>
-                <branch-info repo="$PROJECT_DIR$" source="origin/master" />
-              </list>
-            </value>
-          </entry>
-        </map>
-      </branch-storage>
-    </excluded-from-favorite>
-    <favorite-branches>
-      <branch-storage>
-        <map>
-          <entry type="LOCAL">
-            <value>
-              <list>
-                <branch-info repo="$PROJECT_DIR$" source="KubanD" />
-              </list>
-            </value>
-          </entry>
-        </map>
-      </branch-storage>
-    </favorite-branches>
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="master" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GitSEFilterConfiguration">
-    <file-type-list>
-      <filtered-out-file-type name="LOCAL_BRANCH" />
-      <filtered-out-file-type name="REMOTE_BRANCH" />
-      <filtered-out-file-type name="TAG" />
-      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
-    </file-type-list>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -90,26 +42,29 @@
   </component>
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="exceleditor.install" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../p1-Tannerv2" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
-    <property name="ts.external.directory.path" value="C:\Users\K\IdeaProjects\p2-Group1v2\frontend\node_modules\typescript\lib" />
+    <property name="ts.external.directory.path" value="C:\Users\tanne\Downloads\p2-Group1v2\frontend\node_modules\typescript\lib" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\K\IdeaProjects\p2-Group1v2\frontend\src" />
       <recent name="C:\Users\Minec\Downloads\p2-Group1\backend" />
     </key>
   </component>
   <component name="RunManager" selected="npm.Angular CLI Server">
+    <configuration name="snake.html" type="JavascriptDebugType" temporary="true" nameIsGenerated="true" uri="http://localhost:63342/p2-Group1v2/frontend/src/snake.html" useBuiltInWebServerPort="true">
+      <method v="2" />
+    </configuration>
     <configuration name="P2Group1Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="p2-Group1.main" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.revature.p2Group1.P2Group1Application" />
@@ -129,9 +84,15 @@
       <method v="2" />
     </configuration>
     <list>
+      <item itemvalue="JavaScript Debug.snake.html" />
       <item itemvalue="npm.Angular CLI Server" />
       <item itemvalue="Spring Boot.P2Group1Application" />
     </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="JavaScript Debug.snake.html" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -142,10 +103,19 @@
       <option name="presentableId" value="Default" />
       <updated>1648666424288</updated>
       <workItem from="1648666425498" duration="3151000" />
-      <workItem from="1648748196478" duration="384000" />
-      <workItem from="1648759020406" duration="1279000" />
-      <workItem from="1648761093488" duration="182000" />
-      <workItem from="1649006319758" duration="17122000" />
+      <workItem from="1648767195133" duration="793000" />
+      <workItem from="1648768095028" duration="149000" />
+      <workItem from="1648768368059" duration="144000" />
+      <workItem from="1648794019663" duration="409000" />
+      <workItem from="1648842122031" duration="9934000" />
+      <workItem from="1648873257424" duration="5830000" />
+      <workItem from="1648921709373" duration="569000" />
+      <workItem from="1648935661153" duration="486000" />
+      <workItem from="1648946563845" duration="906000" />
+      <workItem from="1648960824192" duration="1436000" />
+      <workItem from="1648968230834" duration="1402000" />
+      <workItem from="1648999444055" duration="885000" />
+      <workItem from="1649008081902" duration="1059000" />
     </task>
     <task id="LOCAL-00001" summary="refactoring to include spring backend tool">
       <created>1648666809008</created>
@@ -175,28 +145,42 @@
       <option name="project" value="LOCAL" />
       <updated>1648669565611</updated>
     </task>
-    <task id="LOCAL-00005" summary="Set up environment&#10;Added npm">
-      <created>1648760834119</created>
+    <task id="LOCAL-00005" summary="Updated readme with details about two more games.">
+      <created>1648876951450</created>
       <option name="number" value="00005" />
       <option name="presentableId" value="LOCAL-00005" />
       <option name="project" value="LOCAL" />
-      <updated>1648760834119</updated>
+      <updated>1648876951450</updated>
     </task>
-    <task id="LOCAL-00006" summary="Updated from main branch">
-      <created>1649006973826</created>
+    <task id="LOCAL-00006" summary="Began adding a simple AI driven paddle to our pong game. Unfinished currently.">
+      <created>1648877076105</created>
       <option name="number" value="00006" />
       <option name="presentableId" value="LOCAL-00006" />
       <option name="project" value="LOCAL" />
-      <updated>1649006973826</updated>
+      <updated>1648877076105</updated>
     </task>
-    <task id="LOCAL-00007" summary="Added divs with images, need to get images to switch opacity so that only desired background is displayed.">
-      <created>1649021907430</created>
+    <task id="LOCAL-00007" summary="Began adding a simple AI driven paddle to our pong game. Unfinished currently.">
+      <created>1648968715400</created>
       <option name="number" value="00007" />
       <option name="presentableId" value="LOCAL-00007" />
       <option name="project" value="LOCAL" />
-      <updated>1649021907430</updated>
+      <updated>1648968715400</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Fixed minesweeper targeting issue">
+      <created>1649000416072</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1649000416073</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Minor updates and included our original snake game js and html files.">
+      <created>1649009121526</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1649009121526</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -218,9 +202,10 @@
     <MESSAGE value="refactoring to include spring backend tool" />
     <MESSAGE value="syncing files with our first attempt" />
     <MESSAGE value="New, correct, beginnings." />
-    <MESSAGE value="Set up environment&#10;Added npm" />
-    <MESSAGE value="Updated from main branch" />
-    <MESSAGE value="Added divs with images, need to get images to switch opacity so that only desired background is displayed." />
-    <option name="LAST_COMMIT_MESSAGE" value="Added divs with images, need to get images to switch opacity so that only desired background is displayed." />
+    <MESSAGE value="Updated readme with details about two more games." />
+    <MESSAGE value="Began adding a simple AI driven paddle to our pong game. Unfinished currently." />
+    <MESSAGE value="Fixed minesweeper targeting issue" />
+    <MESSAGE value="Minor updates and included our original snake game js and html files." />
+    <option name="LAST_COMMIT_MESSAGE" value="Minor updates and included our original snake game js and html files." />
   </component>
 </project>
