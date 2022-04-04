@@ -10,4 +10,5 @@ public class P2Group1Application {
 		SpringApplication.run(P2Group1Application.class, args);
 	}
 
+
 }
