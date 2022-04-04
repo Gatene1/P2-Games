@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="762a71ff-d528-4e56-b9f8-dc38c6d87cea" name="Changes" comment="New, correct, beginnings.">
+    <list default="true" id="762a71ff-d528-4e56-b9f8-dc38c6d87cea" name="Changes" comment="Merge branch 'master' of https://github.com/220131-mehrab/p2-Group1v2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/app/game-list/game-list.component.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/app/game-list/game-list.component.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +27,14 @@
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -50,7 +59,7 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
-    <property name="ts.external.directory.path" value="C:\Users\Minec\Downloads\p2-Group1\frontend\node_modules\typescript\lib" />
+    <property name="ts.external.directory.path" value="D:\rev\p2-Group1v2\frontend\node_modules\typescript\lib" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -90,6 +99,13 @@
       <option name="presentableId" value="Default" />
       <updated>1648666424288</updated>
       <workItem from="1648666425498" duration="3151000" />
+      <workItem from="1648716969028" duration="1556000" />
+      <workItem from="1648781098244" duration="55752000" />
+      <workItem from="1648944874296" duration="4799000" />
+      <workItem from="1648952117006" duration="14572000" />
+      <workItem from="1648969075208" duration="6474000" />
+      <workItem from="1648994585589" duration="2147000" />
+      <workItem from="1649014576746" duration="1668000" />
     </task>
     <task id="LOCAL-00001" summary="refactoring to include spring backend tool">
       <created>1648666809008</created>
@@ -119,7 +135,28 @@
       <option name="project" value="LOCAL" />
       <updated>1648669565611</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="commitment required.">
+      <created>1648791127398</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1648791127398</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Coordinated files with Tanner. Made Game over screen animation for Minesweeper to match the Snake game.">
+      <created>1648975942465</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1648975942465</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Merge branch 'master' of https://github.com/220131-mehrab/p2-Group1v2">
+      <created>1648975994050</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1648975994050</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -140,7 +177,14 @@
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="refactoring to include spring backend tool" />
     <MESSAGE value="syncing files with our first attempt" />
+    <MESSAGE value="Merge branch 'master' of https://github.com/220131-mehrab/p2-Group1v2&#10;&#10; Conflicts:&#10;&#9;.idea/workspace.xml" />
     <MESSAGE value="New, correct, beginnings." />
-    <option name="LAST_COMMIT_MESSAGE" value="New, correct, beginnings." />
+    <MESSAGE value="Merge branch 'master' of https://github.com/220131-mehrab/p2-Group1v2&#10;&#10; Conflicts:&#10;&#9;.idea/workspace.xml" />
+    <MESSAGE value="commitment required." />
+    <MESSAGE value="Added new features to the games." />
+    <MESSAGE value="Merge branch 'master' of https://github.com/220131-mehrab/p2-Group1v2&#10;&#10; Conflicts:&#10;&#9;frontend/src/app/app.component.ts" />
+    <MESSAGE value="Coordinated files with Tanner. Made Game over screen animation for Minesweeper to match the Snake game." />
+    <MESSAGE value="Merge branch 'master' of https://github.com/220131-mehrab/p2-Group1v2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'master' of https://github.com/220131-mehrab/p2-Group1v2" />
   </component>
 </project>
