@@ -33,6 +33,7 @@ export class GameListComponent {
       gameChoice = 2;
       startOver = true;
     } else if (game == 3) {
+      window.location.reload();
       gameChoice = 3;
       minesweeperStartOver = true;
     }
