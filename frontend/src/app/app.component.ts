@@ -3,12 +3,10 @@
 import { Component } from '@angular/core';
 import { gameChoice, startOver, minesweeperStartOver, clicked, GameListComponent} from "./game-list/game-list.component";
 
-import { Snake } from './Snake';
 import { snake } from './Snake';
 
-import { GameAddon } from './game-list/gameAddons';
-import { minesweeperButton } from './game-list/gameAddons';
-import {min, TimeInterval} from "rxjs";
+import { Product } from './products';
+import { products } from './products';
 
 @Component({
   selector: 'app-root',
@@ -17,6 +15,8 @@ import {min, TimeInterval} from "rxjs";
 })
 export class AppComponent {
   title = 'Game Chooser';
+  gameChoice: number = gameChoice;
+  products: Product[] = products;
 }
 
 let buttons = document.getElementById('msResetButton');
@@ -120,6 +120,19 @@ let snakeDiv = (id: 'imageSnakeDiv') : HTMLDivElement => {
     throw new Error('Can\'t grab the div');
   return canvasDiv6;
 };
+let gameRulesDiv = (id: 'gameRules') : HTMLDivElement => {
+  let canvasDiv7 = document.getElementById(id);
+  if (!(canvasDiv7 instanceof HTMLDivElement))
+    throw new Error('Can\'t grab the div');
+  return canvasDiv7;
+};
+let gameHeader = (id: 'gameHeader') : HTMLElement => {
+  let element7 = document.getElementById(id);
+  if (!(element7 instanceof HTMLElement))
+    throw new Error('Can\'t grab the h1 element');
+  return element7;
+};
+
 
 let gameOneReset = false;
 let gameTwoReset = false;
@@ -769,12 +782,16 @@ function DrawAll() {
     canvas = getCanvasElementById('SampleGame1');
     ctxGame1 = getCanvasRenderingContext2D(canvas);
     let canvasDivVar = canvasDiv('canvasDiv');
+    let gameRulesDiv2:HTMLDivElement = gameRulesDiv('gameRules');
+    let gameHeaderDiv: HTMLElement = gameHeader('gameHeader');
 
 
     pongDiv2 = pongDiv('imagePongDiv');
     megamanDiv2 = megamanDiv('imageMegaDiv');
     minesweeperDiv2 = minesweeperDiv('imageMinesweeperDiv');
     snakeDiv2 = snakeDiv('imageSnakeDiv');
+    gameHeaderDiv.style.color = 'white';
+    gameRulesDiv2.innerHTML = "<span class='center'>" + products[0].name + "</span><br>================<span><br><br>" + products[0].rules + "</span>";
 
 
     pongDiv2.style.opacity = '1';
@@ -821,11 +838,15 @@ function DrawAll() {
     DrawTracks();
     stageImage = new Image();
     let canvasDivVar = canvasDiv('canvasDiv');
+    let gameHeaderDiv: HTMLElement = gameHeader('gameHeader');
+    let gameRulesDiv2:HTMLDivElement = gameRulesDiv('gameRules');
+    gameHeaderDiv.style.color = 'white';
 
     pongDiv2 = pongDiv('imagePongDiv');
     megamanDiv2 = megamanDiv('imageMegaDiv');
     minesweeperDiv2 = minesweeperDiv('imageMinesweeperDiv');
     snakeDiv2 = snakeDiv('imageSnakeDiv');
+    gameRulesDiv2.innerHTML = "<span class='center'>" + products[1].name + "</span><br>================<span><br><br>" + products[1].rules + "</span>";
 
     pongDiv2.style.opacity = '0';
     megamanDiv2.style.opacity = '1';
@@ -1053,11 +1074,15 @@ function DrawAll() {
     ctxGame1 = getCanvasRenderingContext2D(canvas);
     let canvasDivVar = canvasDiv('canvasDiv');
     canvasDivVar.style.borderColor = "black";
+    let gameHeaderDiv: HTMLElement = gameHeader('gameHeader');
+    let gameRulesDiv2:HTMLDivElement = gameRulesDiv('gameRules');
+    gameHeaderDiv.style.color = "black";
 
     pongDiv2 = pongDiv('imagePongDiv');
     megamanDiv2 = megamanDiv('imageMegaDiv');
     minesweeperDiv2 = minesweeperDiv('imageMinesweeperDiv');
     snakeDiv2 = snakeDiv('imageSnakeDiv');
+    gameRulesDiv2.innerHTML = "<span class='center'>" + products[2].name + "</span><br>================<span><br><br>" + products[2].rules + "</span>";
 
     megamanDiv2.style.opacity = '0';
     pongDiv2.style.opacity = '0';
@@ -1405,10 +1430,14 @@ function DrawAll() {
     ctxGame1 = getCanvasRenderingContext2D(canvas);
     let canvasDivVar = canvasDiv('canvasDiv');
     canvasDivVar.style.borderColor = 'black';
+    let gameHeaderDiv: HTMLElement = gameHeader('gameHeader');
+    let gameRulesDiv2:HTMLDivElement = gameRulesDiv('gameRules');
+    gameHeaderDiv.style.color = "black";
 
     pongDiv2 = pongDiv('imagePongDiv');
     megamanDiv2 = megamanDiv('imageMegaDiv');
     minesweeperDiv2 = minesweeperDiv('imageMinesweeperDiv');
+    gameRulesDiv2.innerHTML = "<span>" + products[3].name + "</span><br>================<span><br><br>" + products[3].rules + "</span>";
     snakeDiv2 = snakeDiv('imageSnakeDiv');
 
     pongDiv2.style.opacity = '0';

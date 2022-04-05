@@ -28,9 +28,21 @@
   </div>
   <div>
     <app-game-list></app-game-list>
-    <div class="canvas" id="canvasDiv">
-      <canvas id="SampleGame1" width="400" height="400"></canvas>
-    </div>
+    <table>
+      <tr>
+        <td>
+          <div class="canvas" id="canvasDiv">
+            <canvas id="SampleGame1" width="400" height="400"></canvas>
+          </div>
+        </td>
+        <td>
+          <div class="gameRules" id="gameRules">
+            <span class="center" *ngIf="gameChoice">{{ products[gameChoice-1].name }}</span><br>
+            <span *ngIf="gameChoice">{{ products[gameChoice-1].rules }}</span>
+          </div>
+        </td>
+      </tr>
+    </table>
   </div>
 </div>
 

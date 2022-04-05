@@ -1,13 +1,11 @@
-<h3>Choose your game: </h3>
+<h1 class="gameHeader" id="gameHeader">Choose your game: </h1>
 <table>
   <tr>
     <td *ngFor="let product of products">
-      <button class="bigButton" [title]="product.name" (click)="share(product.price)">
-        {{ product.description }}
+      <button class="bigButton" [title]="product.description" (click)="share(product.id)">
+        {{ product.name }}
       </button>
     </td>
-    <td><input id="textField1"></td>
-    <td><textarea id="textField2" rows="5"></textarea></td>
   </tr>
   <tr>
     <td colspan="3" style="display: table-cell; text-align: center;"><button class="resetButton" id="msResetButton" [title]="gameButton.title" (click)="MinesweeperReset()" >{{gameButton.value}}</button></td>

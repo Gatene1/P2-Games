@@ -6,6 +6,8 @@ import { products } from '../products';
 import { GameAddon }  from "./gameAddons";
 import { minesweeperButton } from "./gameAddons";
 
+import { AppComponent } from "../app.component";
+
 let gameChoice = 3;
 let startOver = false;
 let minesweeperStartOver = false;
@@ -33,9 +35,9 @@ export class GameListComponent {
       gameChoice = 2;
       startOver = true;
     } else if (game == 3) {
-      window.location.reload();
       gameChoice = 3;
       minesweeperStartOver = true;
+      window.location.reload();
     }
     else if (game == 4) {
       gameChoice = 4;
